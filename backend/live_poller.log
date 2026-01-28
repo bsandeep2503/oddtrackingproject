@@ -1,0 +1,714 @@
+2026-01-26 16:17:32,480 - INFO - ============================================================
+2026-01-26 16:17:32,481 - INFO - Starting Live Game Poller
+2026-01-26 16:17:32,481 - INFO - Backend URL: http://localhost:8000
+2026-01-26 16:17:32,481 - INFO - Game ID: 2
+2026-01-26 16:17:32,481 - INFO - Poll Interval: 30 seconds
+2026-01-26 16:17:32,481 - INFO - Max Polls: Unlimited
+2026-01-26 16:17:32,481 - INFO - ============================================================
+2026-01-26 16:17:32,481 - INFO - 
+[Poll #1] 2026-01-26 16:17:32
+2026-01-26 16:17:36,550 - ERROR -   Request Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 16:17:36,552 - INFO -   Summary: 0 successes, 1 errors in 1 polls
+2026-01-26 16:17:36,553 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:18:06,557 - INFO - 
+[Poll #2] 2026-01-26 16:18:06
+2026-01-26 16:18:13,281 - WARNING -   Status: error
+2026-01-26 16:18:13,282 - WARNING -   Message: Could not scrape game
+2026-01-26 16:18:13,282 - INFO -   Summary: 0 successes, 2 errors in 2 polls
+2026-01-26 16:18:13,282 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:18:43,287 - INFO - 
+[Poll #3] 2026-01-26 16:18:43
+2026-01-26 16:18:47,393 - ERROR -   Request Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 16:18:47,393 - INFO -   Summary: 0 successes, 3 errors in 3 polls
+2026-01-26 16:18:47,393 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:19:17,398 - INFO - 
+[Poll #4] 2026-01-26 16:19:17
+2026-01-26 16:19:21,448 - ERROR -   Request Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 16:19:21,449 - INFO -   Summary: 0 successes, 4 errors in 4 polls
+2026-01-26 16:19:21,449 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:19:51,454 - INFO - 
+[Poll #5] 2026-01-26 16:19:51
+2026-01-26 16:19:58,002 - INFO -   Status: SUCCESS
+2026-01-26 16:19:58,002 - INFO -   Score: Away Team 69 - 44 
+2026-01-26 16:19:58,002 - INFO -   Quarter: Q1
+2026-01-26 16:19:58,002 - INFO -   Odds: Home=1.75, Away=2.04
+2026-01-26 16:19:58,002 - INFO -   Summary: 1 successes, 4 errors in 5 polls
+2026-01-26 16:19:58,002 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:20:28,007 - INFO - 
+[Poll #6] 2026-01-26 16:20:28
+2026-01-26 16:20:34,544 - WARNING -   Status: error
+2026-01-26 16:20:34,544 - WARNING -   Message: Could not scrape game
+2026-01-26 16:20:34,544 - INFO -   Summary: 1 successes, 5 errors in 6 polls
+2026-01-26 16:20:34,545 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:21:04,549 - INFO - 
+[Poll #7] 2026-01-26 16:21:04
+2026-01-26 16:21:08,616 - ERROR -   Request Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 16:21:08,617 - INFO -   Summary: 1 successes, 6 errors in 7 polls
+2026-01-26 16:21:08,617 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:21:38,622 - INFO - 
+[Poll #8] 2026-01-26 16:21:38
+2026-01-26 16:21:42,682 - ERROR -   Request Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 16:21:42,682 - INFO -   Summary: 1 successes, 7 errors in 8 polls
+2026-01-26 16:21:42,683 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:22:12,687 - INFO - 
+[Poll #9] 2026-01-26 16:22:12
+2026-01-26 16:22:19,129 - INFO -   Status: SUCCESS
+2026-01-26 16:22:19,130 - INFO -   Score: Away Team 69 - 44 
+2026-01-26 16:22:19,130 - INFO -   Quarter: Q1
+2026-01-26 16:22:19,130 - INFO -   Odds: Home=1.75, Away=2.04
+2026-01-26 16:22:19,130 - INFO -   Summary: 2 successes, 7 errors in 9 polls
+2026-01-26 16:22:19,130 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:22:49,135 - INFO - 
+[Poll #10] 2026-01-26 16:22:49
+2026-01-26 16:22:53,199 - ERROR -   Request Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 16:22:53,199 - INFO -   Summary: 2 successes, 8 errors in 10 polls
+2026-01-26 16:22:53,200 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:23:23,204 - INFO - 
+[Poll #11] 2026-01-26 16:23:23
+2026-01-26 16:23:27,263 - ERROR -   Request Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 16:23:27,264 - INFO -   Summary: 2 successes, 9 errors in 11 polls
+2026-01-26 16:23:27,264 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:23:57,268 - INFO - 
+[Poll #12] 2026-01-26 16:23:57
+2026-01-26 16:24:01,324 - ERROR -   Request Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 16:24:01,325 - INFO -   Summary: 2 successes, 10 errors in 12 polls
+2026-01-26 16:24:01,325 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:24:28,597 - INFO - ============================================================
+2026-01-26 16:24:28,597 - INFO - Starting Live Game Poller
+2026-01-26 16:24:28,597 - INFO - Backend URL: http://localhost:8000
+2026-01-26 16:24:28,597 - INFO - Game ID: 2
+2026-01-26 16:24:28,597 - INFO - Poll Interval: 15 seconds
+2026-01-26 16:24:28,597 - INFO - Max Polls: Unlimited
+2026-01-26 16:24:28,597 - INFO - ============================================================
+2026-01-26 16:24:28,598 - INFO - 
+[Poll #1] 2026-01-26 16:24:28
+2026-01-26 16:24:31,329 - INFO - 
+[Poll #13] 2026-01-26 16:24:31
+2026-01-26 16:24:34,857 - INFO -   Status: SUCCESS
+2026-01-26 16:24:34,857 - INFO -   Score: Away Team 69 - 44 
+2026-01-26 16:24:34,857 - INFO -   Quarter: Q1
+2026-01-26 16:24:34,858 - INFO -   Odds: Home=1.75, Away=2.04
+2026-01-26 16:24:34,858 - INFO -   Summary: 1 successes, 0 errors in 1 polls
+2026-01-26 16:24:34,858 - INFO -   Waiting 15 seconds until next poll...
+2026-01-26 16:24:37,604 - INFO -   Status: SUCCESS
+2026-01-26 16:24:37,604 - INFO -   Score: Away Team 69 - 44 
+2026-01-26 16:24:37,604 - INFO -   Quarter: Q1
+2026-01-26 16:24:37,604 - INFO -   Odds: Home=1.75, Away=2.04
+2026-01-26 16:24:37,605 - INFO -   Summary: 3 successes, 10 errors in 13 polls
+2026-01-26 16:24:37,605 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:24:42,477 - INFO - 
+
+Interrupted by user (Ctrl+C)
+2026-01-26 16:24:42,477 - INFO - 
+============================================================
+2026-01-26 16:24:42,477 - INFO - Polling complete!
+2026-01-26 16:24:42,477 - INFO - Total polls: 1
+2026-01-26 16:24:42,478 - INFO - Successes: 1
+2026-01-26 16:24:42,478 - INFO - Errors: 0
+2026-01-26 16:24:42,478 - INFO - Log file: D:\nba-odds-momentum\backend\live_poller.log
+2026-01-26 16:24:42,478 - INFO - ============================================================
+2026-01-26 16:25:07,608 - INFO - 
+[Poll #14] 2026-01-26 16:25:07
+2026-01-26 16:25:11,280 - INFO - ============================================================
+2026-01-26 16:25:11,280 - INFO - Starting Live Game Poller
+2026-01-26 16:25:11,280 - INFO - Backend URL: http://localhost:8000
+2026-01-26 16:25:11,280 - INFO - Game ID: 2
+2026-01-26 16:25:11,280 - INFO - Poll Interval: 15 seconds
+2026-01-26 16:25:11,280 - INFO - Max Polls: Unlimited
+2026-01-26 16:25:11,280 - INFO - ============================================================
+2026-01-26 16:25:11,280 - INFO - 
+[Poll #1] 2026-01-26 16:25:11
+2026-01-26 16:25:13,956 - INFO -   Status: SUCCESS
+2026-01-26 16:25:13,957 - INFO -   Score: Away Team 69 - 44 
+2026-01-26 16:25:13,957 - INFO -   Quarter: Q1
+2026-01-26 16:25:13,957 - INFO -   Odds: Home=1.75, Away=2.04
+2026-01-26 16:25:13,957 - INFO -   Summary: 4 successes, 10 errors in 14 polls
+2026-01-26 16:25:13,957 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:25:17,568 - INFO -   Status: SUCCESS
+2026-01-26 16:25:17,568 - INFO -   Score: Away Team 69 - 44 
+2026-01-26 16:25:17,568 - INFO -   Quarter: Q1
+2026-01-26 16:25:17,568 - INFO -   Odds: Home=1.75, Away=2.04
+2026-01-26 16:25:17,569 - INFO -   Summary: 1 successes, 0 errors in 1 polls
+2026-01-26 16:25:17,569 - INFO -   Waiting 15 seconds until next poll...
+2026-01-26 16:25:24,007 - INFO - 
+
+Interrupted by user (Ctrl+C)
+2026-01-26 16:25:24,007 - INFO - 
+============================================================
+2026-01-26 16:25:24,008 - INFO - Polling complete!
+2026-01-26 16:25:24,008 - INFO - Total polls: 1
+2026-01-26 16:25:24,008 - INFO - Successes: 1
+2026-01-26 16:25:24,008 - INFO - Errors: 0
+2026-01-26 16:25:24,008 - INFO - Log file: D:\nba-odds-momentum\backend\live_poller.log
+2026-01-26 16:25:24,009 - INFO - ============================================================
+2026-01-26 16:25:43,961 - INFO - 
+[Poll #15] 2026-01-26 16:25:43
+2026-01-26 16:26:08,162 - INFO - ============================================================
+2026-01-26 16:26:08,162 - INFO - Starting Live Game Poller
+2026-01-26 16:26:08,162 - INFO - Backend: http://localhost:8000
+2026-01-26 16:26:08,162 - INFO - Game ID: 2
+2026-01-26 16:26:08,162 - INFO - Poll Interval: 15 seconds
+2026-01-26 16:26:08,162 - INFO - ============================================================
+2026-01-26 16:26:08,163 - INFO - 
+[Poll #1] 2026-01-26 16:26:08
+2026-01-26 16:26:16,016 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:26:16,016 - INFO -   Summary: 4 successes, 11 errors in 15 polls
+2026-01-26 16:26:16,016 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:26:40,191 - INFO - 
+
+Interrupted by user (Ctrl+C)
+2026-01-26 16:26:40,193 - INFO - 
+============================================================
+2026-01-26 16:26:40,194 - INFO - Polling complete!
+2026-01-26 16:26:40,194 - INFO - Total polls: 1
+2026-01-26 16:26:40,195 - INFO - Successes: 0
+2026-01-26 16:26:40,196 - INFO - Errors: 0
+2026-01-26 16:26:40,196 - INFO - ============================================================
+
+2026-01-26 16:26:46,020 - INFO - 
+[Poll #16] 2026-01-26 16:26:46
+2026-01-26 16:27:18,045 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:27:18,045 - INFO -   Summary: 4 successes, 12 errors in 16 polls
+2026-01-26 16:27:18,045 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:27:26,138 - INFO - ============================================================
+2026-01-26 16:27:26,138 - INFO - Starting Live Game Poller
+2026-01-26 16:27:26,138 - INFO - Backend: http://localhost:8000
+2026-01-26 16:27:26,138 - INFO - Game ID: 2
+2026-01-26 16:27:26,138 - INFO - Poll Interval: 15 seconds
+2026-01-26 16:27:26,138 - INFO - ============================================================
+2026-01-26 16:27:26,139 - INFO - 
+[Poll #1] 2026-01-26 16:27:26
+2026-01-26 16:27:26,139 - INFO -   Sending request...
+2026-01-26 16:27:48,049 - INFO - 
+[Poll #17] 2026-01-26 16:27:48
+2026-01-26 16:28:20,106 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:28:20,107 - INFO -   Summary: 4 successes, 13 errors in 17 polls
+2026-01-26 16:28:20,107 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:28:28,218 - INFO - 
+
+Interrupted by user (Ctrl+C)
+2026-01-26 16:28:28,219 - INFO - 
+============================================================
+2026-01-26 16:28:28,219 - INFO - Polling complete!
+2026-01-26 16:28:28,219 - INFO - Total polls: 1
+2026-01-26 16:28:28,219 - INFO - Successes: 0
+2026-01-26 16:28:28,220 - INFO - Errors: 0
+2026-01-26 16:28:28,220 - INFO - ============================================================
+
+2026-01-26 16:28:50,110 - INFO - 
+[Poll #18] 2026-01-26 16:28:50
+2026-01-26 16:29:22,155 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:29:22,156 - INFO -   Summary: 4 successes, 14 errors in 18 polls
+2026-01-26 16:29:22,156 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:29:52,160 - INFO - 
+[Poll #19] 2026-01-26 16:29:52
+2026-01-26 16:30:24,195 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:30:24,195 - INFO -   Summary: 4 successes, 15 errors in 19 polls
+2026-01-26 16:30:24,195 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:30:54,199 - INFO - 
+[Poll #20] 2026-01-26 16:30:54
+2026-01-26 16:31:26,252 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:31:26,252 - INFO -   Summary: 4 successes, 16 errors in 20 polls
+2026-01-26 16:31:26,252 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:31:56,255 - INFO - 
+[Poll #21] 2026-01-26 16:31:56
+2026-01-26 16:32:28,284 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:32:28,284 - INFO -   Summary: 4 successes, 17 errors in 21 polls
+2026-01-26 16:32:28,284 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:32:58,289 - INFO - 
+[Poll #22] 2026-01-26 16:32:58
+2026-01-26 16:33:30,352 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:33:30,353 - INFO -   Summary: 4 successes, 18 errors in 22 polls
+2026-01-26 16:33:30,353 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:34:00,357 - INFO - 
+[Poll #23] 2026-01-26 16:34:00
+2026-01-26 16:34:32,387 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:34:32,387 - INFO -   Summary: 4 successes, 19 errors in 23 polls
+2026-01-26 16:34:32,387 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:35:02,391 - INFO - 
+[Poll #24] 2026-01-26 16:35:02
+2026-01-26 16:35:34,428 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:35:34,428 - INFO -   Summary: 4 successes, 20 errors in 24 polls
+2026-01-26 16:35:34,428 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:36:04,432 - INFO - 
+[Poll #25] 2026-01-26 16:36:04
+2026-01-26 16:36:36,499 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:36:36,499 - INFO -   Summary: 4 successes, 21 errors in 25 polls
+2026-01-26 16:36:36,500 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:37:06,503 - INFO - 
+[Poll #26] 2026-01-26 16:37:06
+2026-01-26 16:37:38,555 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:37:38,556 - INFO -   Summary: 4 successes, 22 errors in 26 polls
+2026-01-26 16:37:38,556 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:38:08,560 - INFO - 
+[Poll #27] 2026-01-26 16:38:08
+2026-01-26 16:38:40,613 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:38:40,614 - INFO -   Summary: 4 successes, 23 errors in 27 polls
+2026-01-26 16:38:40,614 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:39:10,617 - INFO - 
+[Poll #28] 2026-01-26 16:39:10
+2026-01-26 16:39:42,654 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:39:42,655 - INFO -   Summary: 4 successes, 24 errors in 28 polls
+2026-01-26 16:39:42,655 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:40:12,664 - INFO - 
+[Poll #29] 2026-01-26 16:40:12
+2026-01-26 16:40:44,958 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:40:44,961 - INFO -   Summary: 4 successes, 25 errors in 29 polls
+2026-01-26 16:40:44,963 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:41:14,966 - INFO - 
+[Poll #30] 2026-01-26 16:41:14
+2026-01-26 16:41:47,012 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:41:47,012 - INFO -   Summary: 4 successes, 26 errors in 30 polls
+2026-01-26 16:41:47,013 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:42:17,015 - INFO - 
+[Poll #31] 2026-01-26 16:42:17
+2026-01-26 16:42:49,050 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:42:49,050 - INFO -   Summary: 4 successes, 27 errors in 31 polls
+2026-01-26 16:42:49,051 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:43:19,054 - INFO - 
+[Poll #32] 2026-01-26 16:43:19
+2026-01-26 16:43:51,108 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:43:51,109 - INFO -   Summary: 4 successes, 28 errors in 32 polls
+2026-01-26 16:43:51,109 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:44:21,111 - INFO - 
+[Poll #33] 2026-01-26 16:44:21
+2026-01-26 16:44:53,127 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:44:53,127 - INFO -   Summary: 4 successes, 29 errors in 33 polls
+2026-01-26 16:44:53,127 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:45:23,130 - INFO - 
+[Poll #34] 2026-01-26 16:45:23
+2026-01-26 16:45:55,195 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:45:55,196 - INFO -   Summary: 4 successes, 30 errors in 34 polls
+2026-01-26 16:45:55,196 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:46:25,199 - INFO - 
+[Poll #35] 2026-01-26 16:46:25
+2026-01-26 16:46:57,243 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:46:57,244 - INFO -   Summary: 4 successes, 31 errors in 35 polls
+2026-01-26 16:46:57,244 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:47:27,247 - INFO - 
+[Poll #36] 2026-01-26 16:47:27
+2026-01-26 16:47:59,258 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:47:59,259 - INFO -   Summary: 4 successes, 32 errors in 36 polls
+2026-01-26 16:47:59,259 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:48:29,262 - INFO - 
+[Poll #37] 2026-01-26 16:48:29
+2026-01-26 16:49:01,316 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:49:01,316 - INFO -   Summary: 4 successes, 33 errors in 37 polls
+2026-01-26 16:49:01,316 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:49:31,319 - INFO - 
+[Poll #38] 2026-01-26 16:49:31
+2026-01-26 16:50:03,364 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:50:03,364 - INFO -   Summary: 4 successes, 34 errors in 38 polls
+2026-01-26 16:50:03,364 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:50:33,369 - INFO - 
+[Poll #39] 2026-01-26 16:50:33
+2026-01-26 16:50:41,776 - INFO - ============================================================
+2026-01-26 16:50:41,777 - INFO - Starting Live Game Poller
+2026-01-26 16:50:41,777 - INFO - Backend: http://localhost:8000
+2026-01-26 16:50:41,777 - INFO - Game ID: 2
+2026-01-26 16:50:41,777 - INFO - Poll Interval: 15 seconds
+2026-01-26 16:50:41,777 - INFO - ============================================================
+2026-01-26 16:50:41,777 - INFO - 
+[Poll #1] 2026-01-26 16:50:41
+2026-01-26 16:50:41,777 - INFO -   Sending request...
+2026-01-26 16:51:05,403 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:51:05,403 - INFO -   Summary: 4 successes, 35 errors in 39 polls
+2026-01-26 16:51:05,403 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:51:35,406 - INFO - 
+[Poll #40] 2026-01-26 16:51:35
+2026-01-26 16:51:43,822 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 16:51:43,823 - INFO -   Summary: 0 successes, 1 errors from 1 polls
+2026-01-26 16:51:43,823 - INFO -   Waiting 15 seconds...
+2026-01-26 16:51:58,825 - INFO - 
+[Poll #2] 2026-01-26 16:51:58
+2026-01-26 16:51:58,825 - INFO -   Sending request...
+2026-01-26 16:52:07,446 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:52:07,446 - INFO -   Summary: 4 successes, 36 errors in 40 polls
+2026-01-26 16:52:07,447 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:52:37,449 - INFO - 
+[Poll #41] 2026-01-26 16:52:37
+2026-01-26 16:53:00,867 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 16:53:00,877 - INFO -   Summary: 0 successes, 2 errors from 2 polls
+2026-01-26 16:53:00,877 - INFO -   Waiting 15 seconds...
+2026-01-26 16:53:09,490 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:53:09,491 - INFO -   Summary: 4 successes, 37 errors in 41 polls
+2026-01-26 16:53:09,491 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:53:14,340 - INFO - 
+
+Interrupted by user (Ctrl+C)
+2026-01-26 16:53:14,341 - INFO - 
+============================================================
+2026-01-26 16:53:14,341 - INFO - Polling complete!
+2026-01-26 16:53:14,341 - INFO - Total polls: 2
+2026-01-26 16:53:14,341 - INFO - Successes: 0
+2026-01-26 16:53:14,341 - INFO - Errors: 2
+2026-01-26 16:53:14,341 - INFO - ============================================================
+
+2026-01-26 16:53:16,095 - INFO - ============================================================
+2026-01-26 16:53:16,095 - INFO - Starting Live Game Poller
+2026-01-26 16:53:16,095 - INFO - Backend: http://localhost:8000
+2026-01-26 16:53:16,095 - INFO - Game ID: 2
+2026-01-26 16:53:16,095 - INFO - Poll Interval: 15 seconds
+2026-01-26 16:53:16,095 - INFO - ============================================================
+2026-01-26 16:53:16,095 - INFO - 
+[Poll #1] 2026-01-26 16:53:16
+2026-01-26 16:53:16,095 - INFO -   Sending request...
+2026-01-26 16:53:39,494 - INFO - 
+[Poll #42] 2026-01-26 16:53:39
+2026-01-26 16:54:11,550 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:54:11,550 - INFO -   Summary: 4 successes, 38 errors in 42 polls
+2026-01-26 16:54:11,550 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:54:18,149 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 16:54:18,150 - INFO -   Summary: 0 successes, 1 errors from 1 polls
+2026-01-26 16:54:18,150 - INFO -   Waiting 15 seconds...
+2026-01-26 16:54:33,151 - INFO - 
+[Poll #2] 2026-01-26 16:54:33
+2026-01-26 16:54:33,151 - INFO -   Sending request...
+2026-01-26 16:54:41,553 - INFO - 
+[Poll #43] 2026-01-26 16:54:41
+2026-01-26 16:55:13,587 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:55:13,588 - INFO -   Summary: 4 successes, 39 errors in 43 polls
+2026-01-26 16:55:13,588 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:55:35,239 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 16:55:35,240 - INFO -   Summary: 0 successes, 2 errors from 2 polls
+2026-01-26 16:55:35,240 - INFO -   Waiting 15 seconds...
+2026-01-26 16:55:43,591 - INFO - 
+[Poll #44] 2026-01-26 16:55:43
+2026-01-26 16:55:50,242 - INFO - 
+[Poll #3] 2026-01-26 16:55:50
+2026-01-26 16:55:50,242 - INFO -   Sending request...
+2026-01-26 16:56:15,625 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:56:15,625 - INFO -   Summary: 4 successes, 40 errors in 44 polls
+2026-01-26 16:56:15,626 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:56:45,629 - INFO - 
+[Poll #45] 2026-01-26 16:56:45
+2026-01-26 16:56:52,285 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 16:56:52,286 - INFO -   Summary: 0 successes, 3 errors from 3 polls
+2026-01-26 16:56:52,286 - INFO -   Waiting 15 seconds...
+2026-01-26 16:57:07,288 - INFO - 
+[Poll #4] 2026-01-26 16:57:07
+2026-01-26 16:57:07,288 - INFO -   Sending request...
+2026-01-26 16:57:17,679 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:57:17,680 - INFO -   Summary: 4 successes, 41 errors in 45 polls
+2026-01-26 16:57:17,680 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:57:47,683 - INFO - 
+[Poll #46] 2026-01-26 16:57:47
+2026-01-26 16:58:09,336 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 16:58:09,337 - INFO -   Summary: 0 successes, 4 errors from 4 polls
+2026-01-26 16:58:09,337 - INFO -   Waiting 15 seconds...
+2026-01-26 16:58:19,706 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:58:19,707 - INFO -   Summary: 4 successes, 42 errors in 46 polls
+2026-01-26 16:58:19,707 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:58:24,339 - INFO - 
+[Poll #5] 2026-01-26 16:58:24
+2026-01-26 16:58:24,339 - INFO -   Sending request...
+2026-01-26 16:58:49,709 - INFO - 
+[Poll #47] 2026-01-26 16:58:49
+2026-01-26 16:59:21,783 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 16:59:21,784 - INFO -   Summary: 4 successes, 43 errors in 47 polls
+2026-01-26 16:59:21,784 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 16:59:26,385 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 16:59:26,385 - INFO -   Summary: 0 successes, 5 errors from 5 polls
+2026-01-26 16:59:26,386 - INFO -   Waiting 15 seconds...
+2026-01-26 16:59:41,387 - INFO - 
+[Poll #6] 2026-01-26 16:59:41
+2026-01-26 16:59:41,387 - INFO -   Sending request...
+2026-01-26 16:59:51,788 - INFO - 
+[Poll #48] 2026-01-26 16:59:51
+2026-01-26 17:00:23,854 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 17:00:23,854 - INFO -   Summary: 4 successes, 44 errors in 48 polls
+2026-01-26 17:00:23,855 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 17:00:43,441 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 17:00:43,441 - INFO -   Summary: 0 successes, 6 errors from 6 polls
+2026-01-26 17:00:43,441 - INFO -   Waiting 15 seconds...
+2026-01-26 17:00:53,857 - INFO - 
+[Poll #49] 2026-01-26 17:00:53
+2026-01-26 17:00:58,442 - INFO - 
+[Poll #7] 2026-01-26 17:00:58
+2026-01-26 17:00:58,443 - INFO -   Sending request...
+2026-01-26 17:01:25,897 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 17:01:25,898 - INFO -   Summary: 4 successes, 45 errors in 49 polls
+2026-01-26 17:01:25,898 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 17:01:55,900 - INFO - 
+[Poll #50] 2026-01-26 17:01:55
+2026-01-26 17:02:00,471 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 17:02:00,471 - INFO -   Summary: 0 successes, 7 errors from 7 polls
+2026-01-26 17:02:00,472 - INFO -   Waiting 15 seconds...
+2026-01-26 17:02:15,473 - INFO - 
+[Poll #8] 2026-01-26 17:02:15
+2026-01-26 17:02:15,474 - INFO -   Sending request...
+2026-01-26 17:02:27,949 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 17:02:27,949 - INFO -   Summary: 4 successes, 46 errors in 50 polls
+2026-01-26 17:02:27,949 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 17:02:57,951 - INFO - 
+[Poll #51] 2026-01-26 17:02:57
+2026-01-26 17:03:17,508 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 17:03:17,509 - INFO -   Summary: 0 successes, 8 errors from 8 polls
+2026-01-26 17:03:17,509 - INFO -   Waiting 15 seconds...
+2026-01-26 17:03:29,983 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 17:03:29,983 - INFO -   Summary: 4 successes, 47 errors in 51 polls
+2026-01-26 17:03:29,984 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 17:03:32,511 - INFO - 
+[Poll #9] 2026-01-26 17:03:32
+2026-01-26 17:03:32,512 - INFO -   Sending request...
+2026-01-26 17:03:59,986 - INFO - 
+[Poll #52] 2026-01-26 17:03:59
+2026-01-26 17:04:32,035 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 17:04:32,036 - INFO -   Summary: 4 successes, 48 errors in 52 polls
+2026-01-26 17:04:32,036 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 17:04:34,571 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 17:04:34,571 - INFO -   Summary: 0 successes, 9 errors from 9 polls
+2026-01-26 17:04:34,571 - INFO -   Waiting 15 seconds...
+2026-01-26 17:04:49,573 - INFO - 
+[Poll #10] 2026-01-26 17:04:49
+2026-01-26 17:04:49,573 - INFO -   Sending request...
+2026-01-26 17:05:02,038 - INFO - 
+[Poll #53] 2026-01-26 17:05:02
+2026-01-26 17:05:34,071 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 17:05:34,072 - INFO -   Summary: 4 successes, 49 errors in 53 polls
+2026-01-26 17:05:34,072 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 17:05:51,622 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 17:05:51,623 - INFO -   Summary: 0 successes, 10 errors from 10 polls
+2026-01-26 17:05:51,623 - INFO -   Waiting 15 seconds...
+2026-01-26 17:06:04,074 - INFO - 
+[Poll #54] 2026-01-26 17:06:04
+2026-01-26 17:06:06,624 - INFO - 
+[Poll #11] 2026-01-26 17:06:06
+2026-01-26 17:06:06,625 - INFO -   Sending request...
+2026-01-26 17:06:36,124 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 17:06:36,125 - INFO -   Summary: 4 successes, 50 errors in 54 polls
+2026-01-26 17:06:36,125 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 17:07:06,127 - INFO - 
+[Poll #55] 2026-01-26 17:07:06
+2026-01-26 17:07:08,666 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 17:07:08,666 - INFO -   Summary: 0 successes, 11 errors from 11 polls
+2026-01-26 17:07:08,666 - INFO -   Waiting 15 seconds...
+2026-01-26 17:07:23,668 - INFO - 
+[Poll #12] 2026-01-26 17:07:23
+2026-01-26 17:07:23,668 - INFO -   Sending request...
+2026-01-26 17:07:38,161 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 17:07:38,161 - INFO -   Summary: 4 successes, 51 errors in 55 polls
+2026-01-26 17:07:38,162 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 17:08:08,164 - INFO - 
+[Poll #56] 2026-01-26 17:08:08
+2026-01-26 17:08:25,730 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 17:08:25,731 - INFO -   Summary: 0 successes, 12 errors from 12 polls
+2026-01-26 17:08:25,731 - INFO -   Waiting 15 seconds...
+2026-01-26 17:08:40,231 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 17:08:40,231 - INFO -   Summary: 4 successes, 52 errors in 56 polls
+2026-01-26 17:08:40,231 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 17:08:40,732 - INFO - 
+[Poll #13] 2026-01-26 17:08:40
+2026-01-26 17:08:40,732 - INFO -   Sending request...
+2026-01-26 17:09:10,234 - INFO - 
+[Poll #57] 2026-01-26 17:09:10
+2026-01-26 17:09:42,298 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 17:09:42,299 - INFO -   Summary: 4 successes, 53 errors in 57 polls
+2026-01-26 17:09:42,299 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 17:09:42,815 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 17:09:42,815 - INFO -   Summary: 0 successes, 13 errors from 13 polls
+2026-01-26 17:09:42,815 - INFO -   Waiting 15 seconds...
+2026-01-26 17:09:57,816 - INFO - 
+[Poll #14] 2026-01-26 17:09:57
+2026-01-26 17:09:57,817 - INFO -   Sending request...
+2026-01-26 17:10:12,301 - INFO - 
+[Poll #58] 2026-01-26 17:10:12
+2026-01-26 17:10:44,349 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 17:10:44,349 - INFO -   Summary: 4 successes, 54 errors in 58 polls
+2026-01-26 17:10:44,349 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 17:10:59,882 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 17:10:59,883 - INFO -   Summary: 0 successes, 14 errors from 14 polls
+2026-01-26 17:10:59,883 - INFO -   Waiting 15 seconds...
+2026-01-26 17:11:14,354 - INFO - 
+[Poll #59] 2026-01-26 17:11:14
+2026-01-26 17:11:14,884 - INFO - 
+[Poll #15] 2026-01-26 17:11:14
+2026-01-26 17:11:14,885 - INFO -   Sending request...
+2026-01-26 17:11:46,410 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 17:11:46,411 - INFO -   Summary: 4 successes, 55 errors in 59 polls
+2026-01-26 17:11:46,411 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:18:20,312 - INFO - 
+[Poll #60] 2026-01-26 18:18:20
+2026-01-26 18:18:20,316 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 18:18:20,512 - INFO -   Summary: 0 successes, 15 errors from 15 polls
+2026-01-26 18:18:20,557 - INFO -   Waiting 15 seconds...
+2026-01-26 18:18:35,572 - INFO - 
+[Poll #16] 2026-01-26 18:18:35
+2026-01-26 18:18:35,572 - INFO -   Sending request...
+2026-01-26 18:18:52,548 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 18:18:52,551 - INFO -   Summary: 4 successes, 56 errors in 60 polls
+2026-01-26 18:18:52,552 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:19:22,553 - INFO - 
+[Poll #61] 2026-01-26 18:19:22
+2026-01-26 18:19:37,613 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 18:19:37,613 - INFO -   Summary: 0 successes, 16 errors from 16 polls
+2026-01-26 18:19:37,613 - INFO -   Waiting 15 seconds...
+2026-01-26 18:19:52,614 - INFO - 
+[Poll #17] 2026-01-26 18:19:52
+2026-01-26 18:19:52,615 - INFO -   Sending request...
+2026-01-26 18:19:54,602 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 18:19:54,603 - INFO -   Summary: 4 successes, 57 errors in 61 polls
+2026-01-26 18:19:54,603 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:20:24,603 - INFO - 
+[Poll #62] 2026-01-26 18:20:24
+2026-01-26 18:20:56,628 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 18:20:56,628 - INFO -   Summary: 4 successes, 58 errors in 62 polls
+2026-01-26 18:20:56,628 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:21:26,631 - INFO - 
+[Poll #63] 2026-01-26 18:21:26
+2026-01-26 18:21:58,668 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 18:21:58,668 - INFO -   Summary: 4 successes, 59 errors in 63 polls
+2026-01-26 18:21:58,669 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:22:28,671 - INFO - 
+[Poll #64] 2026-01-26 18:22:28
+2026-01-26 18:22:40,281 - INFO - ============================================================
+2026-01-26 18:22:40,282 - INFO - Starting Live Game Poller
+2026-01-26 18:22:40,282 - INFO - Backend: http://localhost:8000
+2026-01-26 18:22:40,282 - INFO - Game ID: 2
+2026-01-26 18:22:40,282 - INFO - Poll Interval: 15 seconds
+2026-01-26 18:22:40,282 - INFO - ============================================================
+2026-01-26 18:22:40,282 - INFO - 
+[Poll #1] 2026-01-26 18:22:40
+2026-01-26 18:22:40,282 - INFO -   Sending request...
+2026-01-26 18:23:00,691 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 18:23:00,691 - INFO -   Summary: 4 successes, 60 errors in 64 polls
+2026-01-26 18:23:00,691 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:23:30,692 - INFO - 
+[Poll #65] 2026-01-26 18:23:30
+2026-01-26 18:23:42,316 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 18:23:42,316 - INFO -   Summary: 0 successes, 1 errors from 1 polls
+2026-01-26 18:23:42,317 - INFO -   Waiting 15 seconds...
+2026-01-26 18:23:57,317 - INFO - 
+[Poll #2] 2026-01-26 18:23:57
+2026-01-26 18:23:57,317 - INFO -   Sending request...
+2026-01-26 18:24:02,733 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 18:24:02,734 - INFO -   Summary: 4 successes, 61 errors in 65 polls
+2026-01-26 18:24:02,734 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:24:32,735 - INFO - 
+[Poll #66] 2026-01-26 18:24:32
+2026-01-26 18:24:59,362 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 18:24:59,362 - INFO -   Summary: 0 successes, 2 errors from 2 polls
+2026-01-26 18:24:59,362 - INFO -   Waiting 15 seconds...
+2026-01-26 18:25:04,771 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 18:25:04,771 - INFO -   Summary: 4 successes, 62 errors in 66 polls
+2026-01-26 18:25:04,772 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:25:14,363 - INFO - 
+[Poll #3] 2026-01-26 18:25:14
+2026-01-26 18:25:14,364 - INFO -   Sending request...
+2026-01-26 18:25:34,773 - INFO - 
+[Poll #67] 2026-01-26 18:25:34
+2026-01-26 18:26:06,833 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 18:26:06,833 - INFO -   Summary: 4 successes, 63 errors in 67 polls
+2026-01-26 18:26:06,833 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:26:16,383 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 18:26:16,384 - INFO -   Summary: 0 successes, 3 errors from 3 polls
+2026-01-26 18:26:16,384 - INFO -   Waiting 15 seconds...
+2026-01-26 18:26:31,385 - INFO - 
+[Poll #4] 2026-01-26 18:26:31
+2026-01-26 18:26:31,385 - INFO -   Sending request...
+2026-01-26 18:26:36,834 - INFO - 
+[Poll #68] 2026-01-26 18:26:36
+2026-01-26 18:27:08,883 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 18:27:08,883 - INFO -   Summary: 4 successes, 64 errors in 68 polls
+2026-01-26 18:27:08,883 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:27:33,432 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 18:27:33,432 - INFO -   Summary: 0 successes, 4 errors from 4 polls
+2026-01-26 18:27:33,433 - INFO -   Waiting 15 seconds...
+2026-01-26 18:27:38,889 - INFO - 
+[Poll #69] 2026-01-26 18:27:38
+2026-01-26 18:27:48,433 - INFO - 
+[Poll #5] 2026-01-26 18:27:48
+2026-01-26 18:27:48,434 - INFO -   Sending request...
+2026-01-26 18:28:10,949 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 18:28:10,949 - INFO -   Summary: 4 successes, 65 errors in 69 polls
+2026-01-26 18:28:10,950 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:28:40,953 - INFO - 
+[Poll #70] 2026-01-26 18:28:40
+2026-01-26 18:28:50,450 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 18:28:50,450 - INFO -   Summary: 0 successes, 5 errors from 5 polls
+2026-01-26 18:28:50,450 - INFO -   Waiting 15 seconds...
+2026-01-26 18:29:05,451 - INFO - 
+[Poll #6] 2026-01-26 18:29:05
+2026-01-26 18:29:05,451 - INFO -   Sending request...
+2026-01-26 18:29:13,031 - ERROR -   TIMEOUT - Request took longer than 30 seconds
+2026-01-26 18:29:13,031 - INFO -   Summary: 4 successes, 66 errors in 70 polls
+2026-01-26 18:29:13,031 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:29:43,033 - INFO - 
+[Poll #71] 2026-01-26 18:29:43
+2026-01-26 18:29:47,108 - ERROR -   Request Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 18:29:47,109 - INFO -   Summary: 4 successes, 67 errors in 71 polls
+2026-01-26 18:29:47,109 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:30:07,498 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+2026-01-26 18:30:07,498 - INFO -   Summary: 0 successes, 6 errors from 6 polls
+2026-01-26 18:30:07,499 - INFO -   Waiting 15 seconds...
+2026-01-26 18:30:17,110 - INFO - 
+[Poll #72] 2026-01-26 18:30:17
+2026-01-26 18:30:21,195 - ERROR -   Request Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 18:30:21,196 - INFO -   Summary: 4 successes, 68 errors in 72 polls
+2026-01-26 18:30:21,196 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:30:22,499 - INFO - 
+[Poll #7] 2026-01-26 18:30:22
+2026-01-26 18:30:22,499 - INFO -   Sending request...
+2026-01-26 18:30:26,559 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 18:30:26,559 - INFO -   Summary: 0 successes, 7 errors from 7 polls
+2026-01-26 18:30:26,559 - INFO -   Waiting 15 seconds...
+2026-01-26 18:30:41,560 - INFO - 
+[Poll #8] 2026-01-26 18:30:41
+2026-01-26 18:30:41,560 - INFO -   Sending request...
+2026-01-26 18:30:45,616 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 18:30:45,617 - INFO -   Summary: 0 successes, 8 errors from 8 polls
+2026-01-26 18:30:45,617 - INFO -   Waiting 15 seconds...
+2026-01-26 18:30:51,196 - INFO - 
+[Poll #73] 2026-01-26 18:30:51
+2026-01-26 18:30:55,263 - ERROR -   Request Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 18:30:55,264 - INFO -   Summary: 4 successes, 69 errors in 73 polls
+2026-01-26 18:30:55,264 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:31:00,618 - INFO - 
+[Poll #9] 2026-01-26 18:31:00
+2026-01-26 18:31:00,618 - INFO -   Sending request...
+2026-01-26 18:31:04,650 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 18:31:04,651 - INFO -   Summary: 0 successes, 9 errors from 9 polls
+2026-01-26 18:31:04,651 - INFO -   Waiting 15 seconds...
+2026-01-26 18:31:19,652 - INFO - 
+[Poll #10] 2026-01-26 18:31:19
+2026-01-26 18:31:19,652 - INFO -   Sending request...
+2026-01-26 18:31:23,715 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 18:31:23,715 - INFO -   Summary: 0 successes, 10 errors from 10 polls
+2026-01-26 18:31:23,716 - INFO -   Waiting 15 seconds...
+2026-01-26 18:31:25,265 - INFO - 
+[Poll #74] 2026-01-26 18:31:25
+2026-01-26 18:31:29,316 - ERROR -   Request Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 18:31:29,319 - INFO -   Summary: 4 successes, 70 errors in 74 polls
+2026-01-26 18:31:29,320 - INFO -   Waiting 30 seconds until next poll...
+2026-01-26 18:31:38,716 - INFO - 
+[Poll #11] 2026-01-26 18:31:38
+2026-01-26 18:31:38,717 - INFO -   Sending request...
+2026-01-26 18:31:42,797 - ERROR -   Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /games/2/scrape-live (Caused by NewConnectionError("HTTPConnection(host='localhost', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it"))
+2026-01-26 18:31:42,798 - INFO -   Summary: 0 successes, 11 errors from 11 polls
+2026-01-26 18:31:42,798 - INFO -   Waiting 15 seconds...
+2026-01-27 21:38:25,226 - INFO - ============================================================
+2026-01-27 21:38:25,227 - INFO - Starting Live Game Poller
+2026-01-27 21:38:25,227 - INFO - Backend: http://localhost:8000
+2026-01-27 21:38:25,227 - INFO - Game ID: 2
+2026-01-27 21:38:25,227 - INFO - Poll Interval: 15 seconds
+2026-01-27 21:38:25,227 - INFO - ============================================================
+2026-01-27 21:38:25,228 - INFO - 
+[Poll #1] 2026-01-27 21:38:25
+2026-01-27 21:38:25,228 - INFO -   Sending request...
+2026-01-27 21:38:34,479 - INFO -   SUCCESS
+2026-01-27 21:38:34,482 - INFO -   Score: Washington Wizards 19 - 0 Portland Trail Blazers
+2026-01-27 21:38:34,483 - INFO -   Quarter: Q1
+2026-01-27 21:38:34,484 - INFO -   Odds: Home=1.70, Away=2.21
+2026-01-27 21:38:34,484 - INFO -   Summary: 1 successes, 0 errors from 1 polls
+2026-01-27 21:38:34,484 - INFO -   Waiting 15 seconds...
+2026-01-27 21:38:42,689 - INFO - 
+
+Interrupted by user (Ctrl+C)
+2026-01-27 21:38:42,690 - INFO - 
+============================================================
+2026-01-27 21:38:42,692 - INFO - Polling complete!
+2026-01-27 21:38:42,693 - INFO - Total polls: 1
+2026-01-27 21:38:42,693 - INFO - Successes: 1
+2026-01-27 21:38:42,694 - INFO - Errors: 0
+2026-01-27 21:38:42,694 - INFO - ============================================================
+

@@ -1,0 +1,7 @@
+requests
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+playwright
+beautifulsoup4
