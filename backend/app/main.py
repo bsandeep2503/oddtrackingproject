@@ -12,6 +12,7 @@ from .db import SessionLocal, init_db
 from .models import Game, OddsSnapshot, QuarterSnapshot, LiveOddsSnapshot, Alert
 from .insights import detect_momentum_events, get_insights_summary
 from .replay import detect_gaps
+from .sync_games import sync_games_from_oddsportal
 
 logger = logging.getLogger(__name__)
 
@@ -86,6 +87,32 @@ def update_game(game_id: int, home_team: str = None, away_team: str = None, odds
     
     db.commit()
     return {"status": "updated"}
+
+@app.post("/games/sync")
+def sync_games(db: Session = Depends(get_db)):
+    games = sync_games_from_oddsportal()
+    inserted = 0
+    updated = 0
+
+    for g in games:
+        existing = db.query(Game).filter(Game.oddsportal_url == g["url"]).first()
+        if existing:
+            existing.home_team = g["home_team"]
+            existing.away_team = g["away_team"]
+            existing.status = g["status"]
+            updated += 1
+        else:
+            new_game = Game(
+                home_team=g["home_team"],
+                away_team=g["away_team"],
+                oddsportal_url=g["url"],
+                status=g["status"]
+            )
+            db.add(new_game)
+            inserted += 1
+
+    db.commit()
+    return {"inserted": inserted, "updated": updated, "total": len(games)}
 
 @app.get("/games")
 def list_games(status: str = None, db: Session = Depends(get_db)):

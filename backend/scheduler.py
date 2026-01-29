@@ -16,6 +16,7 @@ from app.scraper import scrape_oddsportal_quarter
 from app.models import Game
 from app.insights import detect_momentum_events
 from app.alerts import process_alerts
+from app.sync_games import sync_games_from_oddsportal
 
 # Setup logging
 log_dir = Path(__file__).parent
@@ -48,6 +49,23 @@ def get_games_to_poll():
         return games
     finally:
         db.close()
+
+def sync_games_db(db):
+    games = sync_games_from_oddsportal()
+    for g in games:
+        existing = db.query(Game).filter(Game.oddsportal_url == g["url"]).first()
+        if existing:
+            existing.home_team = g["home_team"]
+            existing.away_team = g["away_team"]
+            existing.status = g["status"]
+        else:
+            db.add(Game(
+                home_team=g["home_team"],
+                away_team=g["away_team"],
+                oddsportal_url=g["url"],
+                status=g["status"]
+            ))
+    db.commit()
 
 def update_game_status(game_id: int, status: str, db):
     """Update game status and last polled time"""
@@ -157,6 +175,16 @@ def main():
         cycle_start = datetime.now()
 
         logger.info(f"\n[Cycle #{cycle_count}] {cycle_start.strftime('%Y-%m-%d %H:%M:%S')}")
+
+        # Sync games from OddsPortal at the start of each cycle
+        db = SessionLocal()
+        try:
+            sync_games_db(db)
+            logger.info("Games synced from OddsPortal")
+        except Exception as e:
+            logger.error(f"Error syncing games: {str(e)}")
+        finally:
+            db.close()
 
         games = get_games_to_poll()
         logger.info(f"Found {len(games)} games to check")
