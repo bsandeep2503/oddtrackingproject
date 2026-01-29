@@ -11,6 +11,10 @@ class Game(Base):
     status = Column(String, default="scheduled")  # scheduled | live | final
     start_time = Column(DateTime)
     last_polled_at = Column(DateTime)
+    pregame_ml_home = Column(Float, nullable=True)
+    pregame_ml_away = Column(Float, nullable=True)
+    pregame_spread = Column(Float, nullable=True)
+    pregame_total = Column(Float, nullable=True)
 
 class OddsSnapshot(Base):
     __tablename__ = "odds_snapshots"

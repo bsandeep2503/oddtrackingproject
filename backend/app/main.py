@@ -108,13 +108,21 @@ def sync_games(db: Session = Depends(get_db)):
             existing.home_team = g["home_team"]
             existing.away_team = g["away_team"]
             existing.status = g["status"]
+            existing.pregame_ml_home = g.get("ml_home")
+            existing.pregame_ml_away = g.get("ml_away")
+            existing.pregame_spread = g.get("spread")
+            existing.pregame_total = g.get("total")
             updated += 1
         else:
             db.add(Game(
                 home_team=g["home_team"],
                 away_team=g["away_team"],
                 oddsportal_url=g["url"],
-                status=g["status"]
+                status=g["status"],
+                pregame_ml_home=g.get("ml_home"),
+                pregame_ml_away=g.get("ml_away"),
+                pregame_spread=g.get("spread"),
+                pregame_total=g.get("total")
             ))
             inserted += 1
 

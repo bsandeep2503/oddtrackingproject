@@ -59,6 +59,9 @@ function GameList() {
           <div key={game.id} style={{ border: "1px solid #ccc", padding: "1rem", borderRadius: "8px" }}>
             <h3>{game.away_team} vs {game.home_team}</h3>
             <p>Status: {game.status}</p>
+            <p>Start: {game.start_time ? new Date(game.start_time).toLocaleString() : "TBD"}</p>
+            <p>Pregame ML: {game.pregame_ml_away ?? "—"} / {game.pregame_ml_home ?? "—"}</p>
+            <p>Spread: {game.pregame_spread ?? "—"} | Total: {game.pregame_total ?? "—"}</p>
             <p>Last Polled: {game.last_polled_at ? new Date(game.last_polled_at).toLocaleString() : "Never"}</p>
             <Link to={`/game/${game.id}`}>
               <button>View Details</button>
