@@ -8,6 +8,9 @@ class Game(Base):
     home_team = Column(String)
     away_team = Column(String)
     oddsportal_url = Column(String)  # Store the OddsPortal game URL
+    status = Column(String, default="scheduled")  # scheduled | live | final
+    start_time = Column(DateTime)
+    last_polled_at = Column(DateTime)
 
 class OddsSnapshot(Base):
     __tablename__ = "odds_snapshots"
@@ -47,7 +50,7 @@ class LiveOddsSnapshot(Base):
     __tablename__ = "live_odds_snapshots"
 
     id = Column(Integer, primary_key=True, index=True)
-    game_id = Column(String, index=True)
+    game_id = Column(Integer, index=True)
     timestamp = Column(DateTime)
     quarter = Column(Integer, nullable=True)
     game_clock = Column(String, nullable=True)
@@ -57,3 +60,14 @@ class LiveOddsSnapshot(Base):
     teamB_ml = Column(Float, nullable=True)
     spread_line = Column(Float, nullable=True)
     total_line = Column(Float, nullable=True)
+
+
+class Alert(Base):
+    __tablename__ = "alerts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    game_id = Column(Integer, index=True)
+    type = Column(String)  # underdog_surge, favorite_dip, reversal
+    message = Column(String)
+    timestamp = Column(DateTime)
+    sent_to = Column(String)  # telegram, webhook, etc.

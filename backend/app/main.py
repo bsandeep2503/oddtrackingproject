@@ -3,11 +3,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from datetime import datetime
 import logging
+from dotenv import load_dotenv
+load_dotenv()
 from .scraper import scrape_oddsportal_quarter, scrape_completed_games
 from .pinnacle import fetch_odds_by_sport
 from .db import SessionLocal, init_db
-from .models import Game, OddsSnapshot, QuarterSnapshot, LiveOddsSnapshot
-from .test_data import generate_fake_odds  # you already have this
+from .models import Game, OddsSnapshot, QuarterSnapshot, LiveOddsSnapshot, Alert
+from .insights import detect_momentum_events, get_insights_summary
+from .replay import detect_gaps
 
 logger = logging.getLogger(__name__)
 
@@ -56,9 +59,9 @@ class GameCreateRequest(BaseModel):
     oddsportal_url: str = None
 
 @app.post("/games/create")
-def create_game(home_team: str, away_team: str, oddsportal_url: str = None, db: Session = Depends(get_db)):
+def create_game(payload: GameCreateRequest, db: Session = Depends(get_db)):
     try:
-        game = Game(home_team=home_team, away_team=away_team, oddsportal_url=oddsportal_url)
+        game = Game(home_team=payload.home_team, away_team=payload.away_team, oddsportal_url=payload.oddsportal_url)
         db.add(game)
         db.commit()
         db.refresh(game)
@@ -83,6 +86,13 @@ def update_game(game_id: int, home_team: str = None, away_team: str = None, odds
     db.commit()
     return {"status": "updated"}
 
+@app.get("/games")
+def list_games(status: str = None, db: Session = Depends(get_db)):
+    q = db.query(Game)
+    if status:
+        q = q.filter(Game.status == status)
+    return q.all()
+
 @app.get("/games/{game_id}")
 def get_game_info(game_id: int, db: Session = Depends(get_db)):
     """Get game info including team names and OddsPortal URL"""
@@ -96,11 +106,34 @@ def get_game_info(game_id: int, db: Session = Depends(get_db)):
         "oddsportal_url": game.oddsportal_url
     }
 
+@app.get("/games/{game_id}/summary")
+def game_summary(game_id: int, db: Session = Depends(get_db)):
+    game = db.query(Game).filter(Game.id == game_id).first()
+    if not game:
+        return {"error": "Game not found"}
+    
+    latest = db.query(QuarterSnapshot).filter(QuarterSnapshot.game_id == game_id).order_by(QuarterSnapshot.timestamp.desc()).first()
+    
+    return {
+        "game": {
+            "id": game.id,
+            "home_team": game.home_team,
+            "away_team": game.away_team,
+            "status": game.status,
+            "start_time": game.start_time.isoformat() if game.start_time else None,
+            "last_polled_at": game.last_polled_at.isoformat() if game.last_polled_at else None
+        },
+        "latest": latest
+    }
+
 @app.delete("/games/{game_id}/clear")
 def clear_game_data(game_id: int, db: Session = Depends(get_db)):
     db.query(QuarterSnapshot).filter(QuarterSnapshot.game_id == game_id).delete()
+    db.query(LiveOddsSnapshot).filter(LiveOddsSnapshot.game_id == game_id).delete()
     db.commit()
     return {"status": "cleared"}
+
+@app.get("/games/{game_id}/odds")
 def get_odds(game_id: int, db: Session = Depends(get_db)):
     snapshots = (
         db.query(OddsSnapshot)
@@ -128,6 +161,78 @@ def get_quarter_snapshots(game_id: int, db: Session = Depends(get_db)):
         .all()
     )
     return snapshots
+
+@app.get("/games/{game_id}/insights")
+def get_insights(game_id: int, db: Session = Depends(get_db)):
+    # Get all snapshots (both quarter and live)
+    quarter_snaps = (
+        db.query(QuarterSnapshot)
+        .filter(QuarterSnapshot.game_id == game_id)
+        .order_by(QuarterSnapshot.timestamp)
+        .all()
+    )
+    live_snaps = (
+        db.query(LiveOddsSnapshot)
+        .filter(LiveOddsSnapshot.game_id == game_id)
+        .order_by(LiveOddsSnapshot.timestamp)
+        .all()
+    )
+
+    # Convert to dicts for processing
+    all_snaps = []
+    for snap in quarter_snaps:
+        all_snaps.append({
+            'timestamp': snap.timestamp.isoformat(),
+            'ml_home': snap.ml_home,
+            'ml_away': snap.ml_away,
+            'stage': snap.stage
+        })
+    for snap in live_snaps:
+        all_snaps.append({
+            'timestamp': snap.timestamp.isoformat(),
+            'ml_home': snap.teamA_ml if snap.teamA_ml else None,
+            'ml_away': snap.teamB_ml if snap.teamB_ml else None,
+            'stage': f"Q{snap.quarter}" if snap.quarter else "live"
+        })
+
+    # Generate insights
+    events = detect_momentum_events(all_snaps)
+    summary = get_insights_summary(all_snaps)
+
+    return {
+        "summary": summary,
+        "events": events
+    }
+
+@app.get("/games/{game_id}/replay")
+def replay_game(game_id: int, speed: int = 2, db: Session = Depends(get_db)):
+    snaps = (
+        db.query(QuarterSnapshot)
+        .filter(QuarterSnapshot.game_id == game_id)
+        .order_by(QuarterSnapshot.timestamp)
+        .all()
+    )
+    # speed = seconds per step
+    return {
+        "speed": speed,
+        "count": len(snaps),
+        "snapshots": snaps
+    }
+
+@app.get("/games/{game_id}/health")
+def game_health(game_id: int, db: Session = Depends(get_db)):
+    snaps = (
+        db.query(QuarterSnapshot)
+        .filter(QuarterSnapshot.game_id == game_id)
+        .order_by(QuarterSnapshot.timestamp)
+        .all()
+    )
+    gaps = detect_gaps(snaps, max_gap_seconds=120)
+    return {
+        "count": len(snaps),
+        "gaps": gaps,
+        "ok": len(gaps) == 0
+    }
 
 @app.post("/games/{game_id}/quarters/load-demo")
 def load_demo_quarters(game_id: int, db: Session = Depends(get_db)):
