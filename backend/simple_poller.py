@@ -2,11 +2,14 @@
 """
 Live Game Poller - Simple version for testing continuous polling
 """
-import requests
 import time
 import logging
 from datetime import datetime
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
+from app.db import SessionLocal
+from app.scraper import scrape_oddsportal_quarter
 
 # Setup logging
 log_dir = Path(__file__).parent
@@ -27,7 +30,7 @@ logger = logging.getLogger(__name__)
 # Configuration
 BACKEND_URL = "http://localhost:8000"
 GAME_ID = 2
-POLL_INTERVAL = 15  # seconds
+POLL_INTERVAL = 60  # seconds
 
 print("\n" + "="*60)
 print("STARTING LIVE POLLER")
@@ -51,29 +54,25 @@ try:
         logger.info(f"\n[Poll #{poll_count}] {timestamp}")
         
         try:
-            # Call the live scrape endpoint with longer timeout
-            logger.info(f"  Sending request...")
-            response = requests.post(
-                f"{BACKEND_URL}/games/{GAME_ID}/scrape-live",
-                timeout=60  # Longer timeout for browser launch
-            )
-            
-            if response.status_code == 200:
-                data = response.json()
-                
-                if data.get('status') == 'live_scraped':
+            # Scrape directly and save to DB
+            logger.info(f"  Scraping live game...")
+            db = SessionLocal()
+            try:
+                snapshots = scrape_oddsportal_quarter(GAME_ID)
+                if snapshots:
+                    db.add_all(snapshots)
+                    db.commit()
                     success_count += 1
-                    
-                    # Log the results
-                    logger.info(f"  SUCCESS")
-                    logger.info(f"  Score: {data.get('score', 'Unknown')}")
-                    logger.info(f"  Quarter: {data.get('quarter', 'Unknown')}")
-                    
-                    odds = data.get('odds', {})
-                    logger.info(f"  Odds: Home={odds.get('home', 0.0):.2f}, Away={odds.get('away', 0.0):.2f}")
-                    
+                    logger.info(f"  SUCCESS - Saved {len(snapshots)} snapshots")
                 else:
                     error_count += 1
+                    logger.info(f"  No live odds found")
+            except Exception as e:
+                db.rollback()
+                error_count += 1
+                logger.error(f"  ERROR: {str(e)}")
+            finally:
+                db.close()
                     logger.warning(f"  Status: {data.get('status')}")
             
             else:
