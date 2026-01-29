@@ -122,7 +122,13 @@ def get_insights_summary(snapshots: List[Dict]) -> Dict:
     home_prob = implied_prob(latest.get('ml_home'))
     away_prob = implied_prob(latest.get('ml_away'))
 
-    favorite = "home" if home_prob and home_prob > 0.5 else "away"
+    favorite = None
+    if home_prob and away_prob:
+        favorite = "home" if home_prob > away_prob else "away"
+    elif home_prob:
+        favorite = "home"
+    elif away_prob:
+        favorite = "away"
 
     return {
         "favorite": favorite,

@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from datetime import datetime
 import logging
@@ -91,7 +92,8 @@ def list_games(status: str = None, db: Session = Depends(get_db)):
     q = db.query(Game)
     if status:
         q = q.filter(Game.status == status)
-    return q.all()
+    games = q.all()
+    return jsonable_encoder(games)
 
 @app.get("/games/{game_id}")
 def get_game_info(game_id: int, db: Session = Depends(get_db)):
@@ -160,7 +162,7 @@ def get_quarter_snapshots(game_id: int, db: Session = Depends(get_db)):
         .order_by(QuarterSnapshot.id)
         .all()
     )
-    return snapshots
+    return jsonable_encoder(snapshots)
 
 @app.get("/games/{game_id}/insights")
 def get_insights(game_id: int, db: Session = Depends(get_db)):
@@ -206,17 +208,53 @@ def get_insights(game_id: int, db: Session = Depends(get_db)):
 
 @app.get("/games/{game_id}/replay")
 def replay_game(game_id: int, speed: int = 2, db: Session = Depends(get_db)):
-    snaps = (
+    # Get all snapshots (both quarter and live)
+    quarter_snaps = (
         db.query(QuarterSnapshot)
         .filter(QuarterSnapshot.game_id == game_id)
         .order_by(QuarterSnapshot.timestamp)
         .all()
     )
+    live_snaps = (
+        db.query(LiveOddsSnapshot)
+        .filter(LiveOddsSnapshot.game_id == str(game_id))
+        .order_by(LiveOddsSnapshot.timestamp)
+        .all()
+    )
+
+    # Convert to dicts for processing
+    all_snaps = []
+    for snap in quarter_snaps:
+        all_snaps.append({
+            'timestamp': snap.timestamp.isoformat(),
+            'ml_home': snap.ml_home,
+            'ml_away': snap.ml_away,
+            'stage': snap.stage,
+            'score_home': snap.score_home,
+            'score_away': snap.score_away,
+            'score_diff': snap.score_diff,
+            'spread': snap.spread
+        })
+    for snap in live_snaps:
+        all_snaps.append({
+            'timestamp': snap.timestamp.isoformat(),
+            'ml_home': snap.teamA_ml if snap.teamA_ml else None,
+            'ml_away': snap.teamB_ml if snap.teamB_ml else None,
+            'stage': f"Q{snap.quarter}" if snap.quarter else "live",
+            'score_home': snap.teamA_score,
+            'score_away': snap.teamB_score,
+            'score_diff': snap.teamA_score - snap.teamB_score if snap.teamA_score is not None and snap.teamB_score is not None else None,
+            'spread': snap.spread_line
+        })
+
+    # Sort by timestamp
+    all_snaps.sort(key=lambda x: x['timestamp'])
+
     # speed = seconds per step
     return {
         "speed": speed,
-        "count": len(snaps),
-        "snapshots": snaps
+        "count": len(all_snaps),
+        "snapshots": jsonable_encoder(all_snaps)
     }
 
 @app.get("/games/{game_id}/health")
@@ -580,7 +618,7 @@ def get_live_snapshots(game_id: str, db: Session = Depends(get_db)):
         .order_by(LiveOddsSnapshot.timestamp)
         .all()
     )
-    return snaps
+    return jsonable_encoder(snaps)
 
 
 @app.get("/pinnacle/games")

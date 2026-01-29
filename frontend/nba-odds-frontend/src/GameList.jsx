@@ -7,10 +7,27 @@ function GameList() {
   const [games, setGames] = useState([]);
   const [filter, setFilter] = useState("live");
 
-  useEffect(() => {
+  const fetchGames = () => {
     axios.get(`${API_BASE_URL}/games?status=${filter}`).then((res) => {
       setGames(res.data);
+    }).catch((err) => {
+      console.error("Error fetching games:", err);
     });
+  };
+
+  useEffect(() => {
+    fetchGames();
+  }, [filter]);
+
+  // Poll for live updates every 30 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (filter === "live" || filter === "") {
+        fetchGames();
+      }
+    }, 30000); // 30 seconds
+
+    return () => clearInterval(interval);
   }, [filter]);
 
   return (

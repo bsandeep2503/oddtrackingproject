@@ -103,9 +103,15 @@ def poll_game(game: Game):
             db.add_all(snapshots)
             db.commit()
 
-            # Detect momentum events and send alerts
+            # Detect momentum events using recent history
+            recent = db.query(QuarterSnapshot)\
+                .filter(QuarterSnapshot.game_id == game.id)\
+                .order_by(QuarterSnapshot.timestamp.desc())\
+                .limit(10).all()
+            
+            # Convert to dicts for processing
             all_snaps = []
-            for snap in snapshots:
+            for snap in recent[::-1]:  # Reverse to chronological order
                 all_snaps.append({
                     'timestamp': snap.timestamp.isoformat(),
                     'ml_home': snap.ml_home,
@@ -160,7 +166,11 @@ def main():
                 if game.status == "scheduled":
                     if is_close_to_start(game):
                         logger.info(f"Game {game.id} is close to start - starting live polling")
-                        update_game_status(game.id, "live", SessionLocal())
+                        db = SessionLocal()
+                        try:
+                            update_game_status(game.id, "live", db)
+                        finally:
+                            db.close()
                         poll_game(game)
                     else:
                         logger.info(f"Game {game.id} scheduled but not close to start")

@@ -30,10 +30,10 @@ function GameDetail() {
       ? value.toFixed(digits)
       : "—";
 
-  const normalizedQuarters = quarters.map((q, i) => {
+  const normalize = (rows) => rows.map((q, i) => {
     const probHome = q.ml_home ? 1 / q.ml_home : null;
     const probAway = q.ml_away ? 1 / q.ml_away : null;
-    const prev = quarters[i - 1];
+    const prev = rows[i - 1];
     const prevProbHome = prev?.ml_home ? 1 / prev.ml_home : null;
     const swing = (probHome != null && prevProbHome != null) ? (probHome - prevProbHome) : 0;
 
@@ -46,6 +46,8 @@ function GameDetail() {
       swingFlag: Math.abs(swing) > 0.08, // 8% threshold
     };
   });
+
+  const normalizedQuarters = normalize(quarters);
 
   const startReplay = () => {
     axios.get(`${API_BASE_URL}/games/${gameId}/replay?speed=${replaySpeed}`)
