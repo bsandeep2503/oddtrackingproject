@@ -88,6 +88,14 @@ def update_game(game_id: int, home_team: str = None, away_team: str = None, odds
     db.commit()
     return {"status": "updated"}
 
+@app.get("/games")
+def list_games(status: str = None, db: Session = Depends(get_db)):
+    q = db.query(Game)
+    if status:
+        q = q.filter(Game.status == status)
+    games = q.all()
+    return jsonable_encoder(games)
+
 @app.post("/games/sync")
 def sync_games(db: Session = Depends(get_db)):
     games = sync_games_from_oddsportal()
@@ -102,25 +110,16 @@ def sync_games(db: Session = Depends(get_db)):
             existing.status = g["status"]
             updated += 1
         else:
-            new_game = Game(
+            db.add(Game(
                 home_team=g["home_team"],
                 away_team=g["away_team"],
                 oddsportal_url=g["url"],
                 status=g["status"]
-            )
-            db.add(new_game)
+            ))
             inserted += 1
 
     db.commit()
     return {"inserted": inserted, "updated": updated, "total": len(games)}
-
-@app.get("/games")
-def list_games(status: str = None, db: Session = Depends(get_db)):
-    q = db.query(Game)
-    if status:
-        q = q.filter(Game.status == status)
-    games = q.all()
-    return jsonable_encoder(games)
 
 @app.get("/games/{game_id}")
 def get_game_info(game_id: int, db: Session = Depends(get_db)):

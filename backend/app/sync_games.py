@@ -1,7 +1,7 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-from datetime import datetime
 import re
+
 
 def sync_games_from_oddsportal():
     """
@@ -34,14 +34,12 @@ def sync_games_from_oddsportal():
             away_team = re.sub(r'^\d+\s*|\s*\d+$', '', team_split[0]).strip()
             home_team = re.sub(r'^\d+\s*|\s*\d+$', '', team_split[1]).strip()
 
-            # Link
             link = row.select_one("a[href*='/basketball/usa/nba/']")
             if not link:
                 continue
             href = link.get("href")
             full_url = f"https://www.oddsportal.com{href}"
 
-            # Status detection (rough)
             row_text = row.get_text(" ").lower()
             status = "scheduled"
             if "live" in row_text or re.search(r"\bq\d\b", row_text):
@@ -49,11 +47,10 @@ def sync_games_from_oddsportal():
             if "final" in row_text or "ft" in row_text:
                 status = "final"
 
-            # Start time (if visible)
             start_time = None
             time_match = re.search(r"\b\d{1,2}:\d{2}\b", row_text)
             if time_match:
-                start_time = time_match.group(0)  # keep as string for now
+                start_time = time_match.group(0)
 
             games.append({
                 "home_team": home_team,

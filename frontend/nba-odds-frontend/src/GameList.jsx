@@ -15,18 +15,19 @@ function GameList() {
     });
   };
 
-  const syncGames = () => {
-    axios.post(`${API_BASE_URL}/games/sync`).then((res) => {
-      console.log("Games synced:", res.data);
-      fetchGames(); // Reload the list
-    }).catch((err) => {
-      console.error("Error syncing games:", err);
+  useEffect(() => {
+    axios.get(`${API_BASE_URL}/games?status=${filter}`).then((res) => {
+      setGames(res.data);
+    });
+  }, [filter]);
+
+  const handleSync = () => {
+    axios.post(`${API_BASE_URL}/games/sync`).then(() => {
+      axios.get(`${API_BASE_URL}/games?status=${filter}`).then((res) => {
+        setGames(res.data);
+      });
     });
   };
-
-  useEffect(() => {
-    fetchGames();
-  }, [filter]);
 
   // Poll for live updates every 30 seconds
   useEffect(() => {
@@ -48,7 +49,9 @@ function GameList() {
         <button onClick={() => setFilter("live")} style={{ marginLeft: "0.5rem" }}>Live</button>
         <button onClick={() => setFilter("final")} style={{ marginLeft: "0.5rem" }}>Final</button>
         <button onClick={() => setFilter("")} style={{ marginLeft: "0.5rem" }}>All</button>
-        <button onClick={syncGames} style={{ marginLeft: "1rem", backgroundColor: "#4CAF50", color: "white" }}>Sync Games</button>
+        <button onClick={handleSync} style={{ marginLeft: "0.5rem", background: "#2e7d32", color: "white" }}>
+          Sync Games
+        </button>
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1rem" }}>
