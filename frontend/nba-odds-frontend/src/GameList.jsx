@@ -5,7 +5,7 @@ import { API_BASE_URL } from "./config";
 
 function GameList() {
   const [games, setGames] = useState([]);
-  const [filter, setFilter] = useState("live");
+  const [filter, setFilter] = useState(null); // Default to all games
   const [error, setError] = useState(null);
 
   const fetchGames = () => {
