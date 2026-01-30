@@ -101,8 +101,8 @@ def list_games(status: str = None, db: Session = Depends(get_db)):
     return jsonable_encoder(games)
 
 @app.post("/games/sync")
-async def sync_games(db: Session = Depends(get_db)):
-    games = await sync_games_from_oddsportal()
+def sync_games(db: Session = Depends(get_db)):
+    games = sync_games_from_oddsportal()
     inserted = 0
     updated = 0
 

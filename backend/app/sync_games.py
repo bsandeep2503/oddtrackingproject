@@ -1,12 +1,12 @@
-from playwright.async_api import async_playwright
+from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import re
+import time
 from datetime import datetime
 from .scraper import scrape_pregame_game, extract_event_header_data
-import asyncio
 
 
-async def sync_games_from_oddsportal():
+def sync_games_from_oddsportal():
     """
     Scrape scheduled + live NBA games from OddsPortal NBA page.
     Returns list of dicts: {home_team, away_team, url, status, start_time}
@@ -14,13 +14,13 @@ async def sync_games_from_oddsportal():
     url = "https://www.oddsportal.com/basketball/usa/nba/"
     games = []
 
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
-        page = await browser.new_page()
-        await page.goto(url)
-        await asyncio.sleep(5)
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
+        page.goto(url)
+        time.sleep(5)
 
-        html = await page.content()
+        html = page.content()
         soup = BeautifulSoup(html, "html.parser")
 
         rows = soup.select(".eventRow")
@@ -86,7 +86,7 @@ async def sync_games_from_oddsportal():
 
             pre = None
             if status == "scheduled":
-                pre = await scrape_pregame_game(full_url, 0)
+                pre = scrape_pregame_game(full_url, 0)
 
             games.append({
                 "home_team": home_team,
@@ -101,6 +101,6 @@ async def sync_games_from_oddsportal():
                 "prematch_url": pre.get("prematch_url") if pre else None
             })
 
-        await browser.close()
+        browser.close()
 
     return games
