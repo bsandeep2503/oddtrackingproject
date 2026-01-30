@@ -45,18 +45,30 @@ def sync_games_from_oddsportal():
 
             row_text = row.get_text(" ").lower()
             status = "scheduled"
-            if "final" in row_text or "ft" in row_text:
-                status = "final"
-            elif re.search(r"\b\d{2,3}\s*[-–]\s*\d{2,3}\b", row_text):
-                status = "live"
-            elif "live" in row_text or re.search(r"\bq\d\b", row_text):
-                status = "live"
+
+            # Try to extract event header data from the row HTML (if present)
+            header_data = extract_event_header_data(str(row))
+            if header_data:
+                stage = (header_data.get("event_stage") or "").lower()
+                if header_data.get("is_finished") or "final" in stage or "finished" in stage:
+                    status = "final"
+                elif header_data.get("is_live") or "live" in stage:
+                    status = "live"
+                elif "scheduled" in stage:
+                    status = "scheduled"
+            else:
+                # fallback to regex
+                if "final" in row_text or "ft" in row_text:
+                    status = "final"
+                elif re.search(r"\b\d{2,3}\s*[-–]\s*\d{2,3}\b", row_text):
+                    status = "live"
+                elif "live" in row_text or re.search(r"\bq\d\b", row_text):
+                    status = "live"
 
             # Start time (if visible)
             start_time = None
             time_match = re.search(r"\b\d{1,2}:\d{2}\b", row_text)
             if time_match:
-                # store as string for now (convert in DB layer if needed)
                 start_time = time_match.group(0)
 
             # Pregame odds from row (decimal odds often visible on list page)
@@ -93,12 +105,12 @@ def sync_games_from_oddsportal():
                 "away_team": away_team,
                 "url": full_url,
                 "status": status,
-                "start_time": pre.get("start_time") if pre and pre.get("start_time") else None,
+                "start_time": pre.get("start_time") if pre and pre.get("start_time") else (header_data.get("start_time") if header_data else None),
                 "ml_home": pre.get("ml_home") if pre else ml_home,
                 "ml_away": pre.get("ml_away") if pre else ml_away,
                 "spread": spread,
                 "total": total,
-                "prematch_url": pre.get("prematch_url") if pre else None
+                "prematch_url": pre.get("prematch_url") if pre else (header_data.get("prematch_url") if header_data else None)
             })
 
         browser.close()

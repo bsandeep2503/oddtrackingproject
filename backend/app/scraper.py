@@ -26,6 +26,9 @@ def extract_event_header_data(html_text: str):
         home = data.get("eventData", {}).get("home")
         away = data.get("eventData", {}).get("away")
         prematch_url = data.get("eventBody", {}).get("tabs", {}).get("eventDetail", {}).get("prematch", {}).get("url")
+        event_stage = data.get("eventBody", {}).get("eventStageName")
+        is_live = data.get("eventData", {}).get("isLive")
+        is_finished = data.get("eventData", {}).get("isFinished")
 
         start_time = None
         if start_ts:
@@ -35,7 +38,10 @@ def extract_event_header_data(html_text: str):
             "home": home,
             "away": away,
             "start_time": start_time,
-            "prematch_url": prematch_url
+            "prematch_url": prematch_url,
+            "event_stage": event_stage,
+            "is_live": is_live,
+            "is_finished": is_finished
         }
     except Exception as e:
         logger.warning(f"Failed to parse react-event-header JSON: {e}")
