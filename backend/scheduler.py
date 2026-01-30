@@ -7,7 +7,7 @@ Polls active games and coordinates scraping
 
 import time
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
@@ -76,7 +76,7 @@ def update_game_status(game_id: int, status: str, db):
     game = db.query(Game).filter(Game.id == game_id).first()
     if game:
         game.status = status
-        game.last_polled_at = datetime.utcnow()
+        game.last_polled_at = datetime.now(timezone.utc)
         db.commit()
         logger.info(f"Game {game_id} status updated to {status}")
 
@@ -84,7 +84,7 @@ def is_close_to_start(game: Game) -> bool:
     """Check if game is within 15 minutes of start"""
     if not game.start_time:
         return False
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     time_diff = (game.start_time - now).total_seconds() / 60
     return 0 <= time_diff <= CLOSE_TO_START_MINUTES
 
@@ -98,7 +98,7 @@ def should_mark_final(game: Game, latest_snapshots) -> bool:
         return True
 
     # If no score change for 20 minutes
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     recent_snaps = [s for s in latest_snapshots
                    if (now - s.timestamp).total_seconds() < FINAL_TIMEOUT_MINUTES * 60]
 
@@ -150,7 +150,7 @@ def poll_game(game: Game):
                 update_game_status(game.id, "final", db)
             else:
                 # Update last polled
-                game.last_polled_at = datetime.utcnow()
+                game.last_polled_at = datetime.now(timezone.utc)
                 db.commit()
 
             logger.info(f"Game {game.id}: Saved {len(snapshots)} snapshots")
