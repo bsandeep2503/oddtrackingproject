@@ -2,6 +2,7 @@ from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import re
 from datetime import datetime
+from .scraper import scrape_pregame_game
 
 
 def sync_games_from_oddsportal():
@@ -80,14 +81,18 @@ def sync_games_from_oddsportal():
                 except:
                     pass
 
+            pre = None
+            if status == "scheduled":
+                pre = scrape_pregame_game(full_url, 0)
+
             games.append({
                 "home_team": home_team,
                 "away_team": away_team,
                 "url": full_url,
                 "status": status,
-                "start_time": start_time,
-                "ml_home": ml_home,
-                "ml_away": ml_away,
+                "start_time": pre.get("start_time") if pre else start_time,
+                "ml_home": pre.get("ml_home") if pre else ml_home,
+                "ml_away": pre.get("ml_away") if pre else ml_away,
                 "spread": spread,
                 "total": total
             })

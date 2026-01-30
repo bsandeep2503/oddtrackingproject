@@ -5,8 +5,40 @@ from .models import QuarterSnapshot
 import logging
 import re
 import time
+import html
+import json
 
 logger = logging.getLogger(__name__)
+
+def extract_event_header_data(html_text: str):
+    """
+    Extract event header JSON from OddsPortal page.
+    Returns dict with home/away/start_time/prematch_url if found.
+    """
+    m = re.search(r'id="react-event-header"[^>]*data="([^"]+)"', html_text)
+    if not m:
+        return None
+    raw = html.unescape(m.group(1))
+    try:
+        data = json.loads(raw)
+        start_ts = data.get("eventBody", {}).get("startDate")
+        home = data.get("eventData", {}).get("home")
+        away = data.get("eventData", {}).get("away")
+        prematch_url = data.get("eventBody", {}).get("tabs", {}).get("eventDetail", {}).get("prematch", {}).get("url")
+
+        start_time = None
+        if start_ts:
+            start_time = datetime.utcfromtimestamp(start_ts).isoformat()
+
+        return {
+            "home": home,
+            "away": away,
+            "start_time": start_time,
+            "prematch_url": prematch_url
+        }
+    except Exception as e:
+        logger.warning(f"Failed to parse react-event-header JSON: {e}")
+        return None
 
 def find_live_nba_game():
     """
@@ -1075,13 +1107,20 @@ def scrape_pregame_game(game_url: str, game_id: int):
         soup = BeautifulSoup(html, "html.parser")
         text = soup.get_text()
         logger.info(f"Extracted text length: {len(text)} characters")
-        
-        # Extract team names from page title or header
+
+        # Pull structured event header data
+        header_data = extract_event_header_data(html)
+
+        # Prefer event header data for team names
         logger.info("Extracting team names...")
         title = soup.find('title')
         h1 = soup.find('h1')
 
-        if title:
+        if header_data and header_data.get("home") and header_data.get("away"):
+            home_team = header_data["home"]
+            away_team = header_data["away"]
+            logger.info(f"✓ Extracted teams from event header: {away_team} vs {home_team}")
+        elif title:
             title_text = title.get_text()
             logger.debug(f"Page title: {title_text}")
 
@@ -1179,7 +1218,8 @@ def scrape_pregame_game(game_url: str, game_id: int):
             "quarter": current_quarter,
             "time": current_time,
             "home_team": home_team,
-            "away_team": away_team
+            "away_team": away_team,
+            "start_time": header_data.get("start_time") if header_data else None
         }
         
         return result
