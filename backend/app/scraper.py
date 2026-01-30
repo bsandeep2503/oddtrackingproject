@@ -1,7 +1,7 @@
 from playwright.async_api import async_playwright
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import datetime, timezone
 from .models import QuarterSnapshot
 import logging
 import re
@@ -186,7 +186,7 @@ def scrape_oddsportal_quarter(game_id: int):
                         ml_home=ml_home,
                         ml_away=ml_away,
                         spread=0.0,
-                        timestamp=datetime.utcnow()
+                        timestamp=datetime.now(timezone.utc)
                     )
                     
                     snapshots.append(snapshot)
@@ -473,7 +473,7 @@ def scrape_completed_games(game_id: int):
                         ml_home=quarter_data['pregame']['odds'][0],
                         ml_away=quarter_data['pregame']['odds'][1],
                         spread=0.0,
-                        timestamp=datetime.utcnow()
+                        timestamp=datetime.now(timezone.utc)
                     ))
                     
                     if quarter_scores and len(quarter_scores) >= 4:
@@ -498,7 +498,7 @@ def scrape_completed_games(game_id: int):
                                     ml_home=q_odds[0],
                                     ml_away=q_odds[1],
                                     spread=0.0,
-                                    timestamp=datetime.utcnow()
+                                    timestamp=datetime.now(timezone.utc)
                                 )
                                 snapshots.append(snap)
                                 logger.info(f"  {stage}: {cumulative_h}-{cumulative_a}, Odds: {q_odds[0]}/{q_odds[1]}")
@@ -512,7 +512,7 @@ def scrape_completed_games(game_id: int):
                         ml_home=quarter_data['final']['odds'][0],
                         ml_away=quarter_data['final']['odds'][1],
                         spread=0.0,
-                        timestamp=datetime.utcnow()
+                        timestamp=datetime.now(timezone.utc)
                     ))
                     
                     logger.info(f"Total snapshots created: {len(snapshots)}")
@@ -698,7 +698,7 @@ def scrape_completed_games(game_id: int):
                         ml_home=quarter_data['pregame']['odds'][0],
                         ml_away=quarter_data['pregame']['odds'][1],
                         spread=0.0,
-                        timestamp=datetime.utcnow()
+                        timestamp=datetime.now(timezone.utc)
                     ))
                     
                     if quarter_scores and len(quarter_scores) >= 4:
@@ -725,7 +725,7 @@ def scrape_completed_games(game_id: int):
                                     ml_home=q_odds[0],
                                     ml_away=q_odds[1],
                                     spread=0.0,
-                                    timestamp=datetime.utcnow()
+                                    timestamp=datetime.now(timezone.utc)
                                 )
                                 snapshots.append(snap)
                                 logger.info(f"  {stage}: {cumulative_h}-{cumulative_a}, Odds: {q_odds[0]}/{q_odds[1]}")
@@ -739,7 +739,7 @@ def scrape_completed_games(game_id: int):
                         ml_home=quarter_data['final']['odds'][0],
                         ml_away=quarter_data['final']['odds'][1],
                         spread=0.0,
-                        timestamp=datetime.utcnow()
+                        timestamp=datetime.now(timezone.utc)
                     ))
                     
                     logger.info(f"Total snapshots created: {len(snapshots)}")
@@ -1023,7 +1023,7 @@ def scrape_live_game(game_url: str, game_id: int):
             logger.warning(f"✗ No odds pairs found")
         
         result = {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "score_home": score_home,
             "score_away": score_away,
             "ml_home": ml_home,
@@ -1212,7 +1212,7 @@ async def scrape_pregame_game(game_url: str, game_id: int):
             logger.warning(f"✗ No odds pairs found")
         
         result = {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "score_home": score_home,
             "score_away": score_away,
             "ml_home": ml_home,

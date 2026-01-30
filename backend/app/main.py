@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
-from datetime import datetime
+from datetime import datetime, timezone
 import logging
 from dotenv import load_dotenv
 load_dotenv()
@@ -151,7 +151,7 @@ async def sync_games(db: Session = Depends(get_db)):
                 ml_home=g.get("ml_home"),
                 ml_away=g.get("ml_away"),
                 spread=g.get("spread") or 0.0,
-                timestamp=datetime.utcnow()
+                timestamp=datetime.now(timezone.utc)
             ))
 
     db.commit()
@@ -343,7 +343,7 @@ def load_demo_quarters(game_id: int, db: Session = Depends(get_db)):
     # Clear existing for that game (optional)
     db.query(QuarterSnapshot).filter(QuarterSnapshot.game_id == game_id).delete()
 
-    base_time = datetime.utcnow()
+    base_time = datetime.now(timezone.utc)
 
     demo_rows = [
         # Pre-game
@@ -552,7 +552,7 @@ def scrape_live_game_endpoint(game_id: int, db: Session = Depends(get_db)):
         ml_home=result.get('ml_home', 0.0),
         ml_away=result.get('ml_away', 0.0),
         spread=0.0,
-        timestamp=datetime.utcnow()
+        timestamp=datetime.now(timezone.utc)
     )
     
     db.add(snapshot)
@@ -619,7 +619,7 @@ async def scrape_pregame_game_endpoint(game_id: int, db: Session = Depends(get_d
         ml_home=result.get('ml_home', 0.0),
         ml_away=result.get('ml_away', 0.0),
         spread=0.0,
-        timestamp=datetime.utcnow()
+        timestamp=datetime.now(timezone.utc)
     )
     
     db.add(snapshot)
@@ -718,7 +718,7 @@ def list_pinnacle_games(limit: int = 50, db: Session = Depends(get_db)):
 def demo_poll(db: Session = Depends(get_db)):
     """Generate sample Pinnacle game data for testing without real API."""
     from datetime import timedelta
-    base_time = datetime.utcnow()
+    base_time = datetime.now(timezone.utc)
     game_id = "demo_hornets_76ers"
     
     # Clear old demo data
