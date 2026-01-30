@@ -6,19 +6,20 @@ import { API_BASE_URL } from "./config";
 function GameList() {
   const [games, setGames] = useState([]);
   const [filter, setFilter] = useState("live");
+  const [error, setError] = useState(null);
 
   const fetchGames = () => {
-    axios.get(`${API_BASE_URL}/games?status=${filter}`).then((res) => {
-      setGames(res.data);
-    }).catch((err) => {
-      console.error("Error fetching games:", err);
-    });
+    setError(null);
+    const url = filter ? `${API_BASE_URL}/games?status=${filter}` : `${API_BASE_URL}/games`;
+    axios.get(url)
+      .then((res) => setGames(res.data))
+      .catch((err) => setError("Backend unreachable. Is API running on 8000?"));
   };
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/games?status=${filter}`).then((res) => {
-      setGames(res.data);
-    });
+    fetchGames();
+    const interval = setInterval(fetchGames, 15000); // auto-retry every 15s
+    return () => clearInterval(interval);
   }, [filter]);
 
   const handleSync = () => {
@@ -48,7 +49,7 @@ function GameList() {
         <button onClick={() => setFilter("scheduled")}>Scheduled</button>
         <button onClick={() => setFilter("live")} style={{ marginLeft: "0.5rem" }}>Live</button>
         <button onClick={() => setFilter("final")} style={{ marginLeft: "0.5rem" }}>Final</button>
-        <button onClick={() => setFilter("")} style={{ marginLeft: "0.5rem" }}>All</button>
+        <button onClick={() => setFilter(null)} style={{ marginLeft: "0.5rem" }}>All</button>
         <button onClick={handleSync} style={{ marginLeft: "0.5rem", background: "#2e7d32", color: "white" }}>
           Sync Games
         </button>
@@ -70,7 +71,8 @@ function GameList() {
         ))}
       </div>
 
-      {games.length === 0 && <p>No games found with status "{filter}".</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {games.length === 0 && !error && <p>No games found with status "{filter ?? "all"}".</p>}
     </div>
   );
 }
