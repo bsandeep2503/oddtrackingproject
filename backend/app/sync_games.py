@@ -45,7 +45,7 @@ async def sync_games_from_oddsportal():
 
             row_text = row.get_text(" ").lower()
             status = "scheduled"
-            if "live" in row_text or re.search(r"\bq\d\b", row_text):
+            if re.search(r"\b\d{2,3}\s*[-–]\s*\d{2,3}\b", row_text):
                 status = "live"
             if "final" in row_text or "ft" in row_text:
                 status = "final"
