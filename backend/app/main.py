@@ -13,6 +13,7 @@ from .models import Game, OddsSnapshot, QuarterSnapshot, LiveOddsSnapshot, Alert
 from .insights import detect_momentum_events, get_insights_summary
 from .replay import detect_gaps
 from .sync_games import sync_games_from_oddsportal
+from .test_data import generate_fake_odds
 
 logger = logging.getLogger(__name__)
 

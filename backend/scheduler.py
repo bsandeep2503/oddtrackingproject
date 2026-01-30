@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 load_dotenv()
 from app.db import SessionLocal
 from app.scraper import scrape_oddsportal_quarter
-from app.models import Game
+from app.models import Game, QuarterSnapshot
 from app.insights import detect_momentum_events
 from app.alerts import process_alerts
 from app.sync_games import sync_games_from_oddsportal

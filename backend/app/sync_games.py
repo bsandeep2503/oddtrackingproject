@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import re
 import time
 from datetime import datetime
-from .scraper import scrape_pregame_game, extract_event_header_data
+from .scraper import extract_event_header_data
 
 
 def sync_games_from_oddsportal():
@@ -109,21 +109,17 @@ def sync_games_from_oddsportal():
                 except:
                     pass
 
-            pre = None
-            if status == "scheduled":
-                pre = scrape_pregame_game(full_url, 0)
-
             games.append({
                 "home_team": home_team,
                 "away_team": away_team,
                 "url": full_url,
                 "status": status,
-                "start_time": pre.get("start_time") if pre and pre.get("start_time") else (header_data.get("start_time") if header_data else None),
-                "ml_home": pre.get("ml_home") if pre else ml_home,
-                "ml_away": pre.get("ml_away") if pre else ml_away,
+                "start_time": header_data.get("start_time") if header_data else None,
+                "ml_home": ml_home,
+                "ml_away": ml_away,
                 "spread": spread,
                 "total": total,
-                "prematch_url": pre.get("prematch_url") if pre else (header_data.get("prematch_url") if header_data else None)
+                "prematch_url": header_data.get("prematch_url") if header_data else None
             })
 
         browser.close()

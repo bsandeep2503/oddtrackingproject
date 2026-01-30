@@ -24,9 +24,7 @@ function GameList() {
 
   const handleSync = () => {
     axios.post(`${API_BASE_URL}/games/sync`).then(() => {
-      axios.get(`${API_BASE_URL}/games?status=${filter}`).then((res) => {
-        setGames(res.data);
-      });
+      fetchGames();
     });
   };
 
