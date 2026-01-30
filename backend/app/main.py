@@ -118,8 +118,9 @@ async def sync_games(db: Session = Depends(get_db)):
             existing.pregame_spread = g.get("spread")
             existing.pregame_total = g.get("total")
             updated += 1
+            game_id = existing.id
         else:
-            db.add(Game(
+            new_game = Game(
                 home_team=g["home_team"],
                 away_team=g["away_team"],
                 oddsportal_url=g["url"],
@@ -129,8 +130,29 @@ async def sync_games(db: Session = Depends(get_db)):
                 pregame_ml_away=g.get("ml_away"),
                 pregame_spread=g.get("spread"),
                 pregame_total=g.get("total")
-            ))
+            )
+            db.add(new_game)
+            db.flush()
+            game_id = new_game.id
             inserted += 1
+
+        # create/refresh pregame snapshot for detail view
+        if g.get("ml_home") and g.get("ml_away"):
+            db.query(QuarterSnapshot).filter(
+                QuarterSnapshot.game_id == game_id,
+                QuarterSnapshot.stage == "pregame"
+            ).delete()
+            db.add(QuarterSnapshot(
+                game_id=game_id,
+                stage="pregame",
+                score_home=0,
+                score_away=0,
+                score_diff=0,
+                ml_home=g.get("ml_home"),
+                ml_away=g.get("ml_away"),
+                spread=g.get("spread") or 0.0,
+                timestamp=datetime.utcnow()
+            ))
 
     db.commit()
     return {"inserted": inserted, "updated": updated, "total": len(games)}

@@ -1,4 +1,5 @@
 from playwright.async_api import async_playwright
+from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 from datetime import datetime
 from .models import QuarterSnapshot
