@@ -101,8 +101,8 @@ def list_games(status: str = None, db: Session = Depends(get_db)):
     return jsonable_encoder(games)
 
 @app.post("/games/sync")
-def sync_games(db: Session = Depends(get_db)):
-    games = sync_games_from_oddsportal()
+async def sync_games(db: Session = Depends(get_db)):
+    games = await sync_games_from_oddsportal()
     inserted = 0
     updated = 0
 
@@ -555,7 +555,7 @@ def scrape_live_game_endpoint(game_id: int, db: Session = Depends(get_db)):
 
 
 @app.post("/games/{game_id}/scrape-pregame")
-def scrape_pregame_game_endpoint(game_id: int, db: Session = Depends(get_db)):
+async def scrape_pregame_game_endpoint(game_id: int, db: Session = Depends(get_db)):
     """
     Scrape pre-game odds for a game before it starts.
     Returns pre-game moneyline odds.
@@ -576,7 +576,7 @@ def scrape_pregame_game_endpoint(game_id: int, db: Session = Depends(get_db)):
     logger.info(f"Scraping pre-game odds for {game_id} from: {game_url}")
     
     # Scrape the game
-    result = scrape_pregame_game(game_url, game_id)
+    result = await scrape_pregame_game(game_url, game_id)
     
     if not result:
         return {"status": "error", "message": "Could not scrape game"}

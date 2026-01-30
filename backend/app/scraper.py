@@ -1,4 +1,4 @@
-from playwright.sync_api import sync_playwright
+from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
 from datetime import datetime
 from .models import QuarterSnapshot
@@ -7,6 +7,7 @@ import re
 import time
 import html
 import json
+import asyncio
 
 logger = logging.getLogger(__name__)
 
@@ -1053,7 +1054,7 @@ def scrape_live_game(game_url: str, game_id: int):
             pass
 
 
-def scrape_pregame_game(game_url: str, game_id: int):
+async def scrape_pregame_game(game_url: str, game_id: int):
     """
     Scrapes pre-game NBA odds from OddsPortal before the game starts.
     Extracts pre-game moneyline odds.
@@ -1070,38 +1071,38 @@ def scrape_pregame_game(game_url: str, game_id: int):
     p = None
     
     try:
-        p = sync_playwright().start()
+        p = await async_playwright().start()
         logger.info("Playwright started for pre-game")
         
         # Use headless=True for production (less memory, no UI)
-        browser = p.chromium.launch(headless=True, args=["--disable-blink-features=AutomationControlled"])
+        browser = await p.chromium.launch(headless=True, args=["--disable-blink-features=AutomationControlled"])
         logger.info("Browser launched")
         
-        page = browser.new_page()
+        page = await browser.new_page()
         logger.info("Page created")
         
         logger.info(f"Navigating to: {game_url}")
         try:
             # Try with load event first, fallback to domcontentloaded
-            page.goto(game_url, wait_until="load", timeout=15000)
+            await page.goto(game_url, wait_until="load", timeout=15000)
             logger.info("Page loaded successfully")
         except Exception as nav_err:
             logger.warning(f"Load timeout/error: {nav_err}, trying with domcontentloaded")
             try:
-                page.goto(game_url, wait_until="domcontentloaded", timeout=10000)
+                await page.goto(game_url, wait_until="domcontentloaded", timeout=10000)
                 logger.info("Page loaded with domcontentloaded")
             except Exception as nav_err2:
                 logger.warning(f"Navigation failed: {nav_err2}, continuing anyway")
                 pass
         
         # Wait a bit for JavaScript to render
-        time.sleep(3)
+        await asyncio.sleep(3)
         
         # For pre-game, we don't click "In-Play Odds" - use the default pre-match view
         
         # Get the page content
         logger.info("Extracting page content")
-        html = page.content()
+        html = await page.content()
         logger.info(f"HTML length: {len(html)} bytes")
         
         soup = BeautifulSoup(html, "html.parser")
@@ -1235,11 +1236,11 @@ def scrape_pregame_game(game_url: str, game_id: int):
         # Ensure browser is closed properly
         try:
             if page:
-                page.close()
+                await page.close()
             if browser:
-                browser.close()
+                await browser.close()
             if p:
-                p.stop()
+                await p.stop()
         except:
             pass
 
