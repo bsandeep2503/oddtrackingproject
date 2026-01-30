@@ -29,8 +29,12 @@ app.add_middleware(
 
 @app.on_event("startup")
 def on_startup():
-    # Database is initialized manually when starting the server
-    pass
+    try:
+        init_db()
+        print("Database initialized successfully")
+    except Exception as e:
+        print(f"Database initialization failed: {e}")
+        raise
 
 def get_db():
     db = SessionLocal()
@@ -108,6 +112,7 @@ def sync_games(db: Session = Depends(get_db)):
             existing.home_team = g["home_team"]
             existing.away_team = g["away_team"]
             existing.status = g["status"]
+            existing.start_time = g.get("start_time")
             existing.pregame_ml_home = g.get("ml_home")
             existing.pregame_ml_away = g.get("ml_away")
             existing.pregame_spread = g.get("spread")
@@ -119,6 +124,7 @@ def sync_games(db: Session = Depends(get_db)):
                 away_team=g["away_team"],
                 oddsportal_url=g["url"],
                 status=g["status"],
+                start_time=g.get("start_time"),
                 pregame_ml_home=g.get("ml_home"),
                 pregame_ml_away=g.get("ml_away"),
                 pregame_spread=g.get("spread"),

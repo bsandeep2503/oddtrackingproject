@@ -1219,7 +1219,8 @@ def scrape_pregame_game(game_url: str, game_id: int):
             "time": current_time,
             "home_team": home_team,
             "away_team": away_team,
-            "start_time": header_data.get("start_time") if header_data else None
+            "start_time": header_data.get("start_time") if header_data else None,
+            "prematch_url": header_data.get("prematch_url") if header_data else None
         }
         
         return result
