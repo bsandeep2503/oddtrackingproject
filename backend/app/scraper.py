@@ -30,7 +30,7 @@ def extract_event_header_data(html_text: str):
 
         start_time = None
         if start_ts:
-            start_time = datetime.utcfromtimestamp(start_ts).isoformat()
+            start_time = datetime.utcfromtimestamp(start_ts)
 
         return {
             "home": home,

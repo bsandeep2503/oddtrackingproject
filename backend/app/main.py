@@ -137,7 +137,7 @@ async def sync_games(db: Session = Depends(get_db)):
             inserted += 1
 
         # create/refresh pregame snapshot for detail view
-        if g.get("ml_home") and g.get("ml_away"):
+        if g.get("ml_home") is not None and g.get("ml_away") is not None:
             db.query(QuarterSnapshot).filter(
                 QuarterSnapshot.game_id == game_id,
                 QuarterSnapshot.stage == "pregame"
