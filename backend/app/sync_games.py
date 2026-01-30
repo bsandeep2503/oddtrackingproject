@@ -46,8 +46,21 @@ def sync_games_from_oddsportal():
             row_text = row.get_text(" ").lower()
             status = "scheduled"
 
-            # Try to extract event header data from the row HTML (if present)
+            # Try to extract event header data (row may not include it)
             header_data = extract_event_header_data(str(row))
+
+            # If not present in row, fetch game detail page once to read header JSON
+            if not header_data:
+                try:
+                    detail_page = browser.new_page()
+                    detail_page.goto(full_url)
+                    time.sleep(2)
+                    detail_html = detail_page.content()
+                    header_data = extract_event_header_data(detail_html)
+                    detail_page.close()
+                except Exception:
+                    header_data = None
+
             if header_data:
                 stage = (header_data.get("event_stage") or "").lower()
                 if header_data.get("is_finished") or "final" in stage or "finished" in stage:
