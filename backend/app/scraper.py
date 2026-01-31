@@ -12,6 +12,18 @@ import random
 
 logger = logging.getLogger(__name__)
 
+SCRAPER_HEALTH = {
+    "live": {"attempts": 0, "success": 0, "last_success": None, "last_error": None, "last_duration_ms": None},
+    "pregame": {"attempts": 0, "success": 0, "last_success": None, "last_error": None, "last_duration_ms": None},
+}
+
+def _log_event(event: str, **fields):
+    payload = {"event": event, **fields}
+    try:
+        logger.info(json.dumps(payload, default=str))
+    except Exception:
+        logger.info(f"{event} | {fields}")
+
 USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15",
@@ -51,6 +63,69 @@ def _stage_from_header(header_data) -> str:
     if "live" in stage:
         return "live"
     return None
+
+def _extract_scores_from_dom(soup):
+    # Try common score containers on OddsPortal
+    candidates = []
+    selectors = [
+        '[data-testid*="score"]',
+        '.score',
+        '.scoreboard__score',
+    ]
+    for sel in selectors:
+        for el in soup.select(sel):
+            txt = el.get_text(" ", strip=True)
+            if not txt:
+                continue
+            candidates.append(txt)
+
+    # look for patterns like "102 - 98"
+    for txt in candidates:
+        m = re.search(r'(\d{1,3})\s*[–-]\s*(\d{1,3})', txt)
+        if m:
+            return int(m.group(1)), int(m.group(2))
+
+    return None, None
+
+
+def _extract_odds_from_dom(soup):
+    # Try common odds containers
+    candidates = []
+    selectors = [
+        '[data-testid*="odds"]',
+        '[data-testid*="price"]',
+        '.odds',
+        '.odds__value',
+    ]
+    for sel in selectors:
+        for el in soup.select(sel):
+            txt = el.get_text(" ", strip=True)
+            if txt:
+                candidates.append(txt)
+
+    # Try American odds first
+    american = []
+    for txt in candidates:
+        american += re.findall(r'[+-]\d{2,3}', txt)
+    # pair into valid pairs
+    for i in range(0, len(american) - 1, 2):
+        a = int(american[i])
+        b = int(american[i+1])
+        if (a < 0 < b) or (b < 0 < a):
+            home = american_to_decimal(a if a < 0 else b)
+            away = american_to_decimal(b if a < 0 else a)
+            return home, away
+
+    # Fallback to decimal odds
+    decimals = []
+    for txt in candidates:
+        decimals += re.findall(r'\d+\.\d{2}', txt)
+    decimals = [float(d) for d in decimals if float(d) > 1.01]
+    if len(decimals) >= 2:
+        return decimals[0], decimals[1]
+
+    return None, None
+
 
 
 def extract_event_header_data(html_text: str):
@@ -362,6 +437,8 @@ def scrape_completed_games(game_id: int):
         return [], {}
 
 def scrape_live_game(game_url: str, game_id: int):
+    SCRAPER_HEALTH["live"]["attempts"] += 1
+    start_ts = time.time()
     """
     Scrapes live NBA game odds from OddsPortal during the game.
     Extracts current score and in-play moneyline odds.
@@ -532,15 +609,22 @@ def scrape_live_game(game_url: str, game_id: int):
         score_home = 0
         score_away = 0
 
+        dom_home, dom_away = _extract_scores_from_dom(soup)
+        if dom_home is not None and dom_away is not None:
+            score_home = dom_home
+            score_away = dom_away
+            logger.info(f"✓ Live score (DOM): {away_team} {score_away} - {score_home} {home_team}")
+
         # Prefer team-name anchored score extraction to avoid matching timestamps
-        team_score_pattern = rf"{re.escape(away_team)}\D*(\d{{1,3}})\D+(\d{{1,3}})\D*{re.escape(home_team)}"
-        team_score_match = re.search(team_score_pattern, text)
-        if team_score_match:
-            score_away = int(team_score_match.group(1))
-            score_home = int(team_score_match.group(2))
-            logger.info(f"✓ Live score (team-anchored): {away_team} {score_away} - {score_home} {home_team}")
-        else:
-            logger.warning("✗ Could not extract live scores, using 0-0")
+        if score_home == 0 and score_away == 0:
+            team_score_pattern = rf"{re.escape(away_team)}\D*(\d{{1,3}})\D+(\d{{1,3}})\D*{re.escape(home_team)}"
+            team_score_match = re.search(team_score_pattern, text)
+            if team_score_match:
+                score_away = int(team_score_match.group(1))
+                score_home = int(team_score_match.group(2))
+                logger.info(f"✓ Live score (team-anchored): {away_team} {score_away} - {score_home} {home_team}")
+            else:
+                logger.warning("✗ Could not extract live scores, using 0-0")
         
         # If event is scheduled and no live score found, treat as not live
         if event_status and "EventScheduled" in str(event_status) and score_home == 0 and score_away == 0:
@@ -599,42 +683,49 @@ def scrape_live_game(game_url: str, game_id: int):
         
         # Extract live moneyline odds
         logger.info("Extracting moneyline odds...")
+        ml_home = 0.0
+        ml_away = 0.0
+
+        dom_ml_home, dom_ml_away = _extract_odds_from_dom(soup)
+        if dom_ml_home and dom_ml_away:
+            ml_home, ml_away = dom_ml_home, dom_ml_away
+            logger.info(f"✓ Odds (DOM): {ml_home:.2f} / {ml_away:.2f}")
+
         # Look for American odds pairs: +XXX -YYY or -XXX +YYY
         odds_pair_pattern = r'([+-]\d{2,3})\s*([+-]\d{2,3})'
         pair_matches = re.findall(odds_pair_pattern, text)
         
-        ml_home = 0.0
-        ml_away = 0.0
-        
         logger.info(f"Found {len(pair_matches)} odds pairs")
-        if len(pair_matches) > 0:
-            logger.debug(f"Odds pairs: {pair_matches[:5]}")
-            # Filter valid pairs (one positive, one negative)
-            valid_pairs = [p for p in pair_matches if (p[0].startswith('-') and p[1].startswith('+')) or (p[0].startswith('+') and p[1].startswith('-'))]
-            if valid_pairs:
-                # Sort by the absolute value of the favorite's odds (lowest number first = best odds)
-                valid_pairs.sort(key=lambda x: min(abs(int(x[0])), abs(int(x[1]))))
-                logger.debug(f"Sorted valid pairs: {valid_pairs[:3]}")
-                pair = valid_pairs[0]
-                odds1 = int(pair[0])
-                odds2 = int(pair[1])
-                # The negative one is the favorite
-                if odds1 < 0:
-                    home_american = odds1
-                    away_american = odds2
-                else:
-                    home_american = odds2
-                    away_american = odds1
-                
-                # Convert to decimal
-                ml_home = american_to_decimal(home_american)
-                ml_away = american_to_decimal(away_american)
-                logger.info(f"✓ Extracted odds: {ml_home:.2f} / {ml_away:.2f}")
-            else:
-                logger.warning("No valid odds pairs found")
-        else:
-            logger.warning(f"✗ No odds pairs found")
-        
+        if ml_home == 0.0 or ml_away == 0.0:
+                if ml_home == 0.0 or ml_away == 0.0:
+                        if len(pair_matches) > 0:
+                            logger.debug(f"Odds pairs: {pair_matches[:5]}")
+                            # Filter valid pairs (one positive, one negative)
+                            valid_pairs = [p for p in pair_matches if (p[0].startswith('-') and p[1].startswith('+')) or (p[0].startswith('+') and p[1].startswith('-'))]
+                            if valid_pairs:
+                                # Sort by the absolute value of the favorite's odds (lowest number first = best odds)
+                                valid_pairs.sort(key=lambda x: min(abs(int(x[0])), abs(int(x[1]))))
+                                logger.debug(f"Sorted valid pairs: {valid_pairs[:3]}")
+                                pair = valid_pairs[0]
+                                odds1 = int(pair[0])
+                                odds2 = int(pair[1])
+                                # The negative one is the favorite
+                                if odds1 < 0:
+                                    home_american = odds1
+                                    away_american = odds2
+                                else:
+                                    home_american = odds2
+                                    away_american = odds1
+                                
+                                # Convert to decimal
+                                ml_home = american_to_decimal(home_american)
+                                ml_away = american_to_decimal(away_american)
+                                logger.info(f"✓ Extracted odds: {ml_home:.2f} / {ml_away:.2f}")
+                            else:
+                                logger.warning("No valid odds pairs found")
+                        else:
+                            logger.warning(f"✗ No odds pairs found")
+                        
 
         # Fallback to decimal odds if American odds not found
         if (ml_home == 0.0 or ml_away == 0.0):
@@ -643,6 +734,11 @@ def scrape_live_game(game_url: str, game_id: int):
                 ml_home = decimal_candidates[0]
                 ml_away = decimal_candidates[1]
                 logger.info(f"✓ Fallback decimal odds: {ml_home:.2f} / {ml_away:.2f}")
+        SCRAPER_HEALTH["live"]["success"] += 1
+        SCRAPER_HEALTH["live"]["last_success"] = datetime.now(timezone.utc).isoformat()
+        SCRAPER_HEALTH["live"]["last_duration_ms"] = int((time.time() - start_ts) * 1000)
+        _log_event("scrape_live_success", game_id=game_id, quarter=current_quarter, score_home=score_home, score_away=score_away, ml_home=ml_home, ml_away=ml_away)
+
         result = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "score_home": score_home,
@@ -658,6 +754,9 @@ def scrape_live_game(game_url: str, game_id: int):
         return result
     
     except Exception as e:
+        SCRAPER_HEALTH["live"]["last_error"] = str(e)
+        SCRAPER_HEALTH["live"]["last_duration_ms"] = int((time.time() - start_ts) * 1000)
+        _log_event("scrape_live_error", game_id=game_id, error=str(e))
         logger.error(f"Live game scraper error: {e}")
         import traceback
         logger.error(traceback.format_exc())
@@ -677,6 +776,8 @@ def scrape_live_game(game_url: str, game_id: int):
 
 
 def scrape_pregame_game(game_url: str, game_id: int):
+    SCRAPER_HEALTH["pregame"]["attempts"] += 1
+    start_ts = time.time()
     """
     Scrapes pre-game NBA odds from OddsPortal before the game starts.
     Extracts pre-game moneyline odds.
@@ -791,12 +892,17 @@ def scrape_pregame_game(game_url: str, game_id: int):
         
         # Extract pre-game moneyline odds
         logger.info("Extracting pre-game moneyline odds...")
+        ml_home = 0.0
+        ml_away = 0.0
+
+        dom_ml_home, dom_ml_away = _extract_odds_from_dom(soup)
+        if dom_ml_home and dom_ml_away:
+            ml_home, ml_away = dom_ml_home, dom_ml_away
+            logger.info(f"✓ Odds (DOM): {ml_home:.2f} / {ml_away:.2f}")
+
         # Look for American odds pairs: +XXX -YYY or -XXX +YYY
         odds_pair_pattern = r'([+-]\d{2,3})\s*([+-]\d{2,3})'
         pair_matches = re.findall(odds_pair_pattern, text)
-        
-        ml_home = 0.0
-        ml_away = 0.0
         
         logger.info(f"Found {len(pair_matches)} odds pairs")
         if len(pair_matches) > 0:
@@ -835,6 +941,11 @@ def scrape_pregame_game(game_url: str, game_id: int):
                 ml_home = decimal_candidates[0]
                 ml_away = decimal_candidates[1]
                 logger.info(f"✓ Fallback decimal odds: {ml_home:.2f} / {ml_away:.2f}")
+        SCRAPER_HEALTH["pregame"]["success"] += 1
+        SCRAPER_HEALTH["pregame"]["last_success"] = datetime.now(timezone.utc).isoformat()
+        SCRAPER_HEALTH["pregame"]["last_duration_ms"] = int((time.time() - start_ts) * 1000)
+        _log_event("scrape_pregame_success", game_id=game_id, ml_home=ml_home, ml_away=ml_away)
+
         result = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "score_home": score_home,
@@ -852,6 +963,9 @@ def scrape_pregame_game(game_url: str, game_id: int):
         return result
     
     except Exception as e:
+        SCRAPER_HEALTH["pregame"]["last_error"] = str(e)
+        SCRAPER_HEALTH["pregame"]["last_duration_ms"] = int((time.time() - start_ts) * 1000)
+        _log_event("scrape_pregame_error", game_id=game_id, error=str(e))
         logger.error(f"Pre-game scraper error: {e}")
         import traceback
         logger.error(traceback.format_exc())
@@ -880,3 +994,5 @@ def american_to_decimal(american_odds: int) -> float:
     except:
         return 0.0
 
+def get_scraper_health():
+    return SCRAPER_HEALTH

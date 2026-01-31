@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 import logging
 from dotenv import load_dotenv
 load_dotenv()
-from .scraper import scrape_oddsportal_quarter, scrape_completed_games
+from .scraper import scrape_oddsportal_quarter, scrape_completed_games, get_scraper_health
 from .pinnacle import fetch_odds_by_sport
 from .db import SessionLocal, init_db
 from .models import Game, OddsSnapshot, QuarterSnapshot, LiveOddsSnapshot, Alert
@@ -47,6 +47,10 @@ def get_db():
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+@app.get("/scraper/health")
+def scraper_health():
+    return get_scraper_health()
 
 # ---------- Games & odds (existing) ----------
 @app.post("/games/{game_id}/scrape-live-quarter")
