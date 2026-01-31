@@ -17,8 +17,8 @@ def sync_games_from_oddsportal():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
-        page.goto(url)
-        time.sleep(5)
+        _goto_with_retries(page, url, attempts=3)
+        time.sleep(2 + _jitter(1.0, 2.5))
 
         html = page.content()
         soup = BeautifulSoup(html, "html.parser")
