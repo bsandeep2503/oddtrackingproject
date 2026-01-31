@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import re
 import time
 from datetime import datetime
-from .scraper import extract_event_header_data
+from .scraper import extract_event_header_data, _goto_with_retries, _jitter
 
 
 def sync_games_from_oddsportal():
